@@ -46,6 +46,10 @@ public class ResultLoader extends AsyncTaskLoader<List<Result>> {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
+        if (ResultsActivity.currentTextbook == null)
+        {
+            ResultsActivity.currentTextbook = new Textbook("", false);
+        }
         return ((List<Result>) ResultsActivity.currentTextbook.getResults());
     }
 
