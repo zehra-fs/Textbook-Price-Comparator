@@ -3,6 +3,7 @@ package com.example.jnbcb.qrtextbook.listview;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.example.jnbcb.qrtextbook.ResultsActivity;
 import com.example.jnbcb.qrtextbook.query.*;
@@ -40,10 +41,13 @@ public class ResultLoader extends AsyncTaskLoader<List<Result>> {
         try {
             ResultsActivity.currentTextbook = DirectTextbook.query(barcode);
         } catch (SAXException e) {
+            Log.e("ResultLoader SAX", e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
+            Log.e("ResultLoader IO", e.getMessage());
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
+            Log.e("ResultLoader Parser", e.getMessage());
             e.printStackTrace();
         }
         if (ResultsActivity.currentTextbook == null)
