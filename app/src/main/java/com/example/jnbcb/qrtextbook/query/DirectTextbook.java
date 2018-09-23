@@ -28,7 +28,8 @@ public class DirectTextbook
 	private static String query = "https://www.directtextbook.com/xml.php?key=" + API_KEY + "&ean="; // query to execute
 
 	// change throws to try catch?
-	private static Document getXMLResponse(String isbn) throws SAXException, IOException, ParserConfigurationException {
+	// error thrown IO for zehra's book
+	private static Document getXMLResponse(String isbn) throws SAXException, ParserConfigurationException, IOException {
 		URL url = new URL(query + isbn);
 		URLConnection conn = url.openConnection();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
