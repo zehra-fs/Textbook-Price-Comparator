@@ -2,13 +2,22 @@ package com.example.jnbcb.qrtextbook.query;
 //modify access of getters setters as needed
 import java.util.List;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 /**
  * Holds information about the book and a list of query results 
  * @author jnbcb
  *
  */
+@Entity
 public class Textbook 
 {
+    @PrimaryKey
+    @NonNull
+    private String isbn;
+    @Ignore
 	private List<Result> results;
 	private String title;
 	private String publisher;
@@ -93,4 +102,13 @@ public class Textbook
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
+
+    @NonNull
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(@NonNull String isbn) {
+        this.isbn = isbn;
+    }
 }

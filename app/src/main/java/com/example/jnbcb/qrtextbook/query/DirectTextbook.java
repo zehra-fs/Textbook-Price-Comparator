@@ -57,9 +57,8 @@ public class DirectTextbook
 		Textbook textBook = DirectTextbook.createTextbook(doc);
 		if (textBook.isSuccess())
 		{
-			textBook.setResults(DirectTextbook.getResults(doc));
+			textBook.setResults(DirectTextbook.getResults(doc, textBook.getIsbn()));
 		}
-		textBook.setResults(DirectTextbook.getResults(doc));
 		return textBook;
 	}
 
@@ -71,7 +70,8 @@ public class DirectTextbook
 			attribute = doc.getElementsByTagName("title");
 			String title = attribute.item(0).getTextContent();
 			textBook = new Textbook(title, true);
-		}catch (NullPointerException e)
+		}
+		catch (NullPointerException e)
         {
 			return new Textbook("Failed", false);
 		}
@@ -97,10 +97,15 @@ public class DirectTextbook
 		else {
 			textBook.setEdition("N/A");
 		}
+
+		attribute = doc.getElementsByTagName("ean");
+		String isbn = attribute.item(0).getTextContent();
+		textBook.setIsbn(isbn);
+
 		return textBook;
 	}
 
-	private static List<Result> getResults(Document doc) {
+	private static List<Result> getResults(Document doc, String isbn) {
 		NodeList items = doc.getElementsByTagName("item");
 		//System.out.println(items.getLength()); // testing
 		Element element;
@@ -142,7 +147,7 @@ public class DirectTextbook
 				System.out.println("WTF IS HAPPENING " + condition);
 				type = "";
 			}
-			result = new Result(url, vendor, price, type, condition);
+			result = new Result(url, vendor, price, type, condition, isbn);
 			results.add(result);
 		}
 		return results;
