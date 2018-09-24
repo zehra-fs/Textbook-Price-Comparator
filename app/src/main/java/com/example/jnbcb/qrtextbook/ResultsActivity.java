@@ -21,8 +21,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.jnbcb.qrtextbook.R;
-import com.example.jnbcb.qrtextbook.listview.ResultAdapter;
+import com.example.jnbcb.qrtextbook.listview.ResultListAdapter;
 import com.example.jnbcb.qrtextbook.listview.ResultLoader;
 import com.example.jnbcb.qrtextbook.query.*;
 
@@ -32,12 +31,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * This activity displays the results of a query in a listview with the option to sort by type
+ */
 public class ResultsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>> {
 
     public static Textbook currentTextbook;
 
     private String barcode;
-    private ResultAdapter adapter;
+    private ResultListAdapter adapter;
     @BindView(R.id.list_view)
     ListView listView;
     @BindView(R.id.empty_state)
@@ -105,7 +107,7 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         ButterKnife.bind(this);
         barcode = getIntent().getExtras().getString("barcode");
         List<Result> list = new ArrayList<>();
-        adapter = new ResultAdapter(this, R.layout.list_item, list);
+        adapter = new ResultListAdapter(this, R.layout.list_item, list);
         listView.setAdapter(adapter);
         listView.setEmptyView(emptyState);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

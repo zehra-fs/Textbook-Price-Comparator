@@ -19,14 +19,13 @@ public abstract class ApplicationDB extends RoomDatabase
     public static ApplicationDB getInMemoryDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE =
-                    Room.inMemoryDatabaseBuilder(context.getApplicationContext(), ApplicationDB.class)
-                            //.allowMainThreadQueries()
-                            .build();
+                    Room.databaseBuilder(context.getApplicationContext(), ApplicationDB.class, "Database").build();
         }
         return INSTANCE;
     }
 
     public static void destroyInstance() {
+        INSTANCE.close();
         INSTANCE = null;
     }
 

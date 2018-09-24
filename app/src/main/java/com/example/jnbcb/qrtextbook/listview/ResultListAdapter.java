@@ -15,9 +15,12 @@ import java.util.List;
 import com.example.jnbcb.qrtextbook.R;
 import com.example.jnbcb.qrtextbook.query.*;
 
-public class ResultAdapter extends ArrayAdapter<Result> {
+/**
+ * This class fills the listview for the results activity
+ */
+public class ResultListAdapter extends ArrayAdapter<Result> {
 
-    public ResultAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Result> articles) {
+    public ResultListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Result> articles) {
         super(context, resource, articles);
     }
 
@@ -34,7 +37,7 @@ public class ResultAdapter extends ArrayAdapter<Result> {
             holder = (ViewHolder) view.getTag();
         }
         Result result = getItem(position);
-        if (result != null){
+        if (result != null) {
             holder.vendorName.setText(result.getCompanyName());
             holder.price.setText(String.format("%.2f", result.getPrice()));
             holder.condition.setText(result.getCondition());
@@ -49,12 +52,10 @@ public class ResultAdapter extends ArrayAdapter<Result> {
         private TextView condition;
         private String url;
 
-        private ViewHolder(View view)
-        {
+        private ViewHolder(View view) {
             vendorName = (TextView) view.findViewById(R.id.vendor_name);
             condition = (TextView) view.findViewById(R.id.condition);
             price = (TextView) view.findViewById(R.id.price);
         }
-
     }
 }
