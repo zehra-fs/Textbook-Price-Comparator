@@ -452,6 +452,8 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
     public void onBarcodeDetected(Barcode barcode) {
         Intent intent = new Intent(this, ResultsActivity.class);
         intent.putExtra("barcode", barcode.displayValue);
+        intent.putExtra("history", false);
+        intent.putExtra("favorite", false);
         startActivity(intent);
 
     }

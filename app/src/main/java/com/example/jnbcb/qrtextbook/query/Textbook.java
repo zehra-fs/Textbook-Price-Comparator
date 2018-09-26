@@ -1,6 +1,7 @@
 package com.example.jnbcb.qrtextbook.query;
 //modify access of getters setters as needed
 
+import java.io.Serializable;
 import java.util.List;
 
 import android.arch.persistence.room.Entity;
@@ -12,7 +13,7 @@ import android.support.annotation.NonNull;
  * Holds information about the book and a list of query results. Acts as an entity in the DAO DB
  */
 @Entity
-public class Textbook {
+public class Textbook implements Serializable{
     @PrimaryKey
     @NonNull
     private String isbn;

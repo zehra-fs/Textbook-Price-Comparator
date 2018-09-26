@@ -25,6 +25,9 @@ public interface ResultDAO
     @Query("Delete From Result Where favorited = 1")
     void deleteFavorited();
 
+    @Query("Delete From Result Where id = :id")
+    void deleteFavorite(int id);
+
     @Query("Select * From Result")
     List<Result> getAll();
 }

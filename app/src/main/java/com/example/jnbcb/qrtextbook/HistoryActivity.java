@@ -1,6 +1,7 @@
 package com.example.jnbcb.qrtextbook;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -20,6 +21,7 @@ import com.example.jnbcb.qrtextbook.listview.HistoryLoader;
 import com.example.jnbcb.qrtextbook.query.Textbook;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,8 +49,13 @@ public class HistoryActivity extends AppCompatActivity implements LoaderManager.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Textbook result = adapter.getItem(position);
-                // launch a result activity with the textbook
+                Textbook textbook = adapter.getItem(position);
+                ResultsActivity.currentTextbook = textbook;
+                Intent intent = new Intent(view.getContext(), ResultsActivity.class);
+                intent.putExtra("history", true);
+                intent.putExtra("favorite", false);
+                intent.putExtra("textbook", textbook);
+                startActivity(intent);
             }
         });
         getSupportLoaderManager().initLoader(0, null, this);
@@ -69,6 +76,7 @@ public class HistoryActivity extends AppCompatActivity implements LoaderManager.
         if (textbooks.isEmpty()){
             emptyState.setText("Your history is empty!");
         } else {
+            Collections.reverse(textbooks);
             adapter.addAll(textbooks);
         }
         Log.e("loader", "finish loader");

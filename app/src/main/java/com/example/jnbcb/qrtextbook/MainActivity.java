@@ -31,4 +31,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
+
+    public void launchFavorite(View view) {
+        Intent intent = new Intent(view.getContext(), ResultsActivity.class);
+        intent.putExtra("history", false);
+        intent.putExtra("favorite", true);
+        startActivity(intent);
+    }
 }
