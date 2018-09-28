@@ -19,4 +19,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/history_button"
+        android:onClick="launchHistory"
+        android:text="History"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/favorite_button"
+        android:onClick="launchFavorite"
+        android:text="Favorite"
+        app:layout_constraintLeft_toRightOf="@id/history_button"/>
+
 </android.support.constraint.ConstraintLayout>

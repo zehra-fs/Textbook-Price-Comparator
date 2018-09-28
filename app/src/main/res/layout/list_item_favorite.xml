@@ -5,38 +5,29 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/vendor_name"
+        android:id="@+id/vendor_name_favorite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/condition"
+        android:id="@+id/condition_favorite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/price"
+        android:id="@+id/price_favorite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <Button
-        android:id="@+id/favorite"
+        android:id="@+id/delete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:focusable="false"
-        android:text="fav" />
-
-    <!--<Button-->
-        <!--android:id="@+id/delete"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:focusable="false"-->
-        <!--android:text="del" />-->
+        android:text="del" />
 
 </LinearLayout>
-

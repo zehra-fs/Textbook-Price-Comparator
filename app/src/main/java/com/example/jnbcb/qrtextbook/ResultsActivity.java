@@ -17,12 +17,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.jnbcb.qrtextbook.R;
-import com.example.jnbcb.qrtextbook.listview.ResultAdapter;
+import com.example.jnbcb.qrtextbook.database.ApplicationDB;
+import com.example.jnbcb.qrtextbook.listview.ResultListAdapter;
 import com.example.jnbcb.qrtextbook.listview.ResultLoader;
 import com.example.jnbcb.qrtextbook.query.*;
 
@@ -32,12 +33,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * This activity displays the results of a query in a listview with the option to sort by type
+ */
 public class ResultsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>> {
 
     public static Textbook currentTextbook;
 
     private String barcode;
-    private ResultAdapter adapter;
+    private ResultListAdapter adapter;
     @BindView(R.id.list_view)
     ListView listView;
     @BindView(R.id.empty_state)
@@ -64,7 +68,6 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         }
         adapter.clear();
         adapter.addAll(filterResults);
-        adapter.addAll();
     }
 
     public void sortByRent(MenuItem item) {
@@ -105,7 +108,7 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         ButterKnife.bind(this);
         barcode = getIntent().getExtras().getString("barcode");
         List<Result> list = new ArrayList<>();
-        adapter = new ResultAdapter(this, R.layout.list_item, list);
+        adapter = new ResultListAdapter(this, R.layout.list_item, list);
         listView.setAdapter(adapter);
         listView.setEmptyView(emptyState);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,12 +121,31 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
                 startActivity(websiteIntent);
             }
         });
+        if (getIntent().getExtras().getBoolean("history")) {
+            final ApplicationDB db = ApplicationDB.getInMemoryDatabase(this);
+            Thread thread = new Thread() {
+                public void run() {
+                    bar.setVisibility(View.VISIBLE);
+                    Textbook textbook = ((Textbook) getIntent().getSerializableExtra("textbook"));
+                    List<Result> results = db.resultModel().getResults(textbook.getIsbn());
+                    ResultsActivity.currentTextbook.setResults(results);
+                    adapter.addAll(results);
+                    bar.setVisibility(View.INVISIBLE);
+                }
+            };
+            thread.start();
+            return;
+        }
         if (checkConnection()) {
             getSupportLoaderManager().initLoader(0, null, this); // replace this?
         } else {
             emptyState.setText("No connection"); // add string to strings.xml
         }
 
+    }
+
+    public void dataChanged() {
+        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     private boolean checkConnection() {
