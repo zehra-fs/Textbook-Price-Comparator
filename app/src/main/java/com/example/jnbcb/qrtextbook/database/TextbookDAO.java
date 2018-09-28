@@ -10,10 +10,12 @@ import com.example.jnbcb.qrtextbook.query.Textbook;
 import java.util.List;
 
 @Dao
-public interface TextbookDAO
-{
+public interface TextbookDAO {
     @Query("Select * From Textbook")
     List<Textbook> getAllTextbooks();
+
+    @Query("Select * FROM Textbook Where isbn = :isbn")
+    Textbook getTextbook(String isbn);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTextbook(Textbook textbook);

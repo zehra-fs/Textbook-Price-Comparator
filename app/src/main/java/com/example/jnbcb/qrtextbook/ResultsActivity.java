@@ -48,8 +48,6 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     TextView emptyState;
     @BindView(R.id.bar)
     ProgressBar bar;
-//    Button favoriteBut;
-//    Button delBut;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,9 +106,6 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results_activity);
         ButterKnife.bind(this);
-        //delBut = ButterKnife.findById(this, R.id.delete);
-        //favoriteBut = ButterKnife.findById(this, R.id.favorite);
-        //delBut.setVisibility(View.INVISIBLE);
         barcode = getIntent().getExtras().getString("barcode");
         List<Result> list = new ArrayList<>();
         adapter = new ResultListAdapter(this, R.layout.list_item, list);
@@ -126,7 +121,7 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
                 startActivity(websiteIntent);
             }
         });
-        if (getIntent().getExtras().getBoolean("history")){
+        if (getIntent().getExtras().getBoolean("history")) {
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(this);
             Thread thread = new Thread() {
                 public void run() {
@@ -141,27 +136,16 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
             thread.start();
             return;
         }
-        if (getIntent().getExtras().getBoolean("favorite")){
-            final ApplicationDB db = ApplicationDB.getInMemoryDatabase(this);
-            Thread thread = new Thread() {
-                public void run() {
-                    bar.setVisibility(View.VISIBLE);
-                    List<Result> results = db.resultModel().getFavoritedResults();
-                    ResultsActivity.currentTextbook = new Textbook("Favorite", true);
-                    ResultsActivity.currentTextbook.setResults(results);
-                    adapter.addAll(results);
-                    bar.setVisibility(View.INVISIBLE);
-                }
-            };
-            thread.start();
-            return;
-        }
         if (checkConnection()) {
             getSupportLoaderManager().initLoader(0, null, this); // replace this?
         } else {
             emptyState.setText("No connection"); // add string to strings.xml
         }
 
+    }
+
+    public void dataChanged() {
+        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     private boolean checkConnection() {

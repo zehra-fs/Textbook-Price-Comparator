@@ -9,11 +9,11 @@ import com.example.jnbcb.qrtextbook.query.Result;
 import com.example.jnbcb.qrtextbook.query.Textbook;
 
 @Database(entities = {Textbook.class, Result.class}, version = 1)
-public abstract class ApplicationDB extends RoomDatabase
-{
+public abstract class ApplicationDB extends RoomDatabase {
     private static ApplicationDB INSTANCE;
 
     public abstract TextbookDAO textbookModel();
+
     public abstract ResultDAO resultModel();
 
     public static ApplicationDB getInMemoryDatabase(Context context) {

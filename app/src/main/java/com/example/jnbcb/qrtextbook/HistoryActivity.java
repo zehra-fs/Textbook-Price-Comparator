@@ -53,12 +53,16 @@ public class HistoryActivity extends AppCompatActivity implements LoaderManager.
                 ResultsActivity.currentTextbook = textbook;
                 Intent intent = new Intent(view.getContext(), ResultsActivity.class);
                 intent.putExtra("history", true);
-                intent.putExtra("favorite", false);
                 intent.putExtra("textbook", textbook);
+                intent.putExtra("barcode", textbook.getIsbn());
                 startActivity(intent);
             }
         });
         getSupportLoaderManager().initLoader(0, null, this);
+    }
+
+    public void dataChanged() {
+        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     @NonNull
@@ -73,7 +77,7 @@ public class HistoryActivity extends AppCompatActivity implements LoaderManager.
     public void onLoadFinished(@NonNull Loader<List<Textbook>> loader, List<Textbook> textbooks) {
         adapter.clear();
         bar.setVisibility(View.INVISIBLE);
-        if (textbooks.isEmpty()){
+        if (textbooks.isEmpty()) {
             emptyState.setText("Your history is empty!");
         } else {
             Collections.reverse(textbooks);
