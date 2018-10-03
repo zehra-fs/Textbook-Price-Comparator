@@ -50,11 +50,12 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
             holder.price.setText(String.format("%.2f", result.getPrice()));
             holder.condition.setText(result.getCondition());
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(view.getContext());
+            // Checks if result is favorite and selects appropriate button background
             if (result.isFavorited()) {
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //holder.favBut.setVisibility(View.INVISIBLE);
+                        // placeholder
                         holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
 
                     }
@@ -63,11 +64,12 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //holder.favBut.setVisibility(View.VISIBLE);
+                        // placeholder
                         holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
                     }
                 });
             }
+            // Favorite or defavorite a result and select appropriate button background
             holder.favBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,7 +79,6 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                             public void run() {
                                 result.setFavorited(true);
                                 db.resultModel().updateResult(result);
-                                Log.e("favorited ", result.toString());
                             }
                         };
                         thread.start();
@@ -96,16 +97,6 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
         }
         return view;
     }
-
-    //                                result.setFavorited(false);
-//                                db.resultModel().updateResult(result);
-//                                holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
-
-//                            ((Activity) context).runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    ((ResultsActivity) context).dataChanged();
-//                                }   });
 
     private class ViewHolder {
         private TextView vendorName;

@@ -22,6 +22,9 @@ import com.example.jnbcb.qrtextbook.query.Textbook;
 
 import java.util.List;
 
+/**
+ * This class populates the listview for the history activity
+ */
 public class HistoryAdapter extends ArrayAdapter<Textbook> {
     private Context context;
 
@@ -47,6 +50,7 @@ public class HistoryAdapter extends ArrayAdapter<Textbook> {
             holder.textName.setText(textbook.getTitle());
         }
         final ApplicationDB db = ApplicationDB.getInMemoryDatabase(view.getContext());
+        // Deletes textbook from database and reloads listview
         holder.delBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
