@@ -13,13 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
-import com.example.jnbcb.qrtextbook.FavoriteActivity;
 import com.example.jnbcb.qrtextbook.R;
-import com.example.jnbcb.qrtextbook.ResultsActivity;
 import com.example.jnbcb.qrtextbook.database.ApplicationDB;
-import com.example.jnbcb.qrtextbook.query.*;
+import com.example.jnbcb.qrtextbook.query.Result;
+
+import java.util.List;
 
 /**
  * This class fills the listview for the results activity
@@ -56,7 +54,8 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        holder.favBut.setVisibility(View.INVISIBLE);
+                        //holder.favBut.setVisibility(View.INVISIBLE);
+                        holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
 
                     }
                 });
@@ -64,33 +63,49 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        holder.favBut.setVisibility(View.VISIBLE);
-
+                        //holder.favBut.setVisibility(View.VISIBLE);
+                        holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
                     }
                 });
             }
             holder.favBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Thread thread = new Thread() {
-                        public void run() {
-                            result.setFavorited(true);
-                            db.resultModel().updateResult(result);
-                            Log.e("favorited ", result.toString());
-                            ((Activity) context).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ((ResultsActivity) context).dataChanged();
-                                }
-                            });
-                        }
-                    };
-                    thread.start();
+                    if (result.isFavorited() == false) {
+                        holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
+                        Thread thread = new Thread() {
+                            public void run() {
+                                result.setFavorited(true);
+                                db.resultModel().updateResult(result);
+                                Log.e("favorited ", result.toString());
+                            }
+                        };
+                        thread.start();
+                    } else {
+                        holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
+                        Thread thread = new Thread() {
+                            public void run() {
+                                result.setFavorited(false);
+                                db.resultModel().updateResult(result);
+                            }
+                        };
+                        thread.start();
+                    }
                 }
             });
         }
         return view;
     }
+
+    //                                result.setFavorited(false);
+//                                db.resultModel().updateResult(result);
+//                                holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
+
+//                            ((Activity) context).runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    ((ResultsActivity) context).dataChanged();
+//                                }   });
 
     private class ViewHolder {
         private TextView vendorName;
