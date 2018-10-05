@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
 package com.example.jnbcb.qrtextbook;
 
 
@@ -38,7 +40,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 
@@ -55,6 +56,10 @@ import com.example.jnbcb.qrtextbook.camera.CameraSourcePreview;
 import com.example.jnbcb.qrtextbook.camera.CameraSource;
 
 import java.io.IOException;
+
+/**
+ * This class was modified by the QRTextbook team.
+ */
 
 /**
  * Activity for the multi-tracker app.  This app detects barcodes and displays the value with the

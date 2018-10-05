@@ -17,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -57,7 +56,6 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         return true;
     }
 
-
     public void sortByBuy(MenuItem item) {
         ArrayList<Result> filterResults = new ArrayList<>();
         Log.e("sort buy", true + "");
@@ -92,13 +90,6 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         }
         adapter.clear();
         adapter.addAll(filterResults);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e("menu item", item.getItemId() + "");
-        Log.e("buy botton", "" + R.id.buy_button);
-        return true;
     }
 
     @Override
@@ -144,6 +135,9 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
 
     }
 
+    /**
+     * Reloads the listview
+     */
     public void dataChanged() {
         getSupportLoaderManager().restartLoader(0, null, this);
     }
@@ -153,7 +147,6 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
-
 
     @NonNull
     @Override
@@ -177,6 +170,5 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
         adapter.clear();
     }
-
 
 }

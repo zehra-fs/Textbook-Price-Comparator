@@ -25,6 +25,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * This activity is used to display the favorited results
+ */
 public class FavoriteActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>> {
 
     private FavoriteAdapter adapter;
@@ -57,6 +60,9 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(0, null, this);
     }
 
+    /**
+     * Reloads the listview
+     */
     public void dataChanged() {
         getSupportLoaderManager().restartLoader(0, null, this);
     }
