@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
 package com.example.jnbcb.qrtextbook;
 
 
@@ -38,7 +40,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -54,16 +55,11 @@ import com.example.jnbcb.qrtextbook.camera.GraphicOverlay;
 import com.example.jnbcb.qrtextbook.camera.CameraSourcePreview;
 import com.example.jnbcb.qrtextbook.camera.CameraSource;
 
-import com.example.jnbcb.qrtextbook.query.Textbook;
-import com.example.jnbcb.qrtextbook.query.DirectTextbook;
-
-import org.xml.sax.SAXException;
-
 import java.io.IOException;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import butterknife.BindView;
+/**
+ * This class was modified by the QRTextbook team.
+ */
 
 /**
  * Activity for the multi-tracker app.  This app detects barcodes and displays the value with the
@@ -92,11 +88,6 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
 
-    public static Textbook textbook;
-
-    @BindView(R.id.load_bar)
-    ProgressBar loadBar;
-
     /**
      * Initializes the UI and creates the detector pipeline.
      */
@@ -104,6 +95,10 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_barcode_scanner);
+
+        //example of how to add something to camera view
+        //Box box = new Box(this);
+        //addContentView(box, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
 
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) findViewById(R.id.graphicOverlay);
@@ -121,12 +116,6 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
             requestCameraPermission();
         }
 
-        gestureDetector = new GestureDetector(this, new CaptureGestureListener());
-        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
-
-        Snackbar.make(mGraphicOverlay, "Tap to capture. Pinch/Stretch to zoom",
-                Snackbar.LENGTH_LONG)
-                .show();
     }
 
     /**
@@ -162,14 +151,6 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
                 .show();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        boolean b = scaleGestureDetector.onTouchEvent(e);
-
-        boolean c = gestureDetector.onTouchEvent(e);
-
-        return b || c || super.onTouchEvent(e);
-    }
 
     /**
      * Creates and starts the camera.  Note that this uses a higher resolution in comparison
@@ -187,7 +168,7 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
         // is set to receive the barcode detection results, track the barcodes, and maintain
         // graphics for each barcode on screen.  The factory is used by the multi-processor to
         // create a separate tracker instance for each barcode.
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).build();
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).setBarcodeFormats(Barcode.EAN_13).build();
         BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay, this);
         barcodeDetector.setProcessor(
                 new MultiProcessor.Builder<>(barcodeFactory).build());
@@ -220,7 +201,7 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
         // at long distances.
         CameraSource.Builder builder = new CameraSource.Builder(getApplicationContext(), barcodeDetector)
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
-                .setRequestedPreviewSize(1600, 1024)
+                .setRequestedPreviewSize(1200, 750)
                 .setRequestedFps(15.0f);
 
         // make sure that auto focus is an available option

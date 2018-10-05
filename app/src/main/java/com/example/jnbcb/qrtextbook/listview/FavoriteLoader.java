@@ -11,6 +11,9 @@ import com.example.jnbcb.qrtextbook.query.Result;
 
 import java.util.List;
 
+/**
+ * This class queries the database for favorited results, returning them to the favorite activity
+ */
 
 public class FavoriteLoader extends AsyncTaskLoader<List<Result>> {
 
@@ -31,7 +34,6 @@ public class FavoriteLoader extends AsyncTaskLoader<List<Result>> {
     public List<Result> loadInBackground() {
         ApplicationDB db = ApplicationDB.getInMemoryDatabase(context);
         List<Result> results = db.resultModel().getFavoritedResults();
-        Log.e("fav Loader", "" + results.size());
         return results;
     }
 }

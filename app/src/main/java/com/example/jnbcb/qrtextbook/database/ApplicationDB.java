@@ -8,6 +8,13 @@ import android.content.Context;
 import com.example.jnbcb.qrtextbook.query.Result;
 import com.example.jnbcb.qrtextbook.query.Textbook;
 
+/*
+    This class grants access to the database and the queries defind in the DAO interfaces.
+    EX:
+    ApplicationDB db = ApplicationDB.getInMemoryDatabase(context);
+    db.resultModel().insert(result);
+ */
+
 @Database(entities = {Textbook.class, Result.class}, version = 1)
 public abstract class ApplicationDB extends RoomDatabase {
     private static ApplicationDB INSTANCE;
