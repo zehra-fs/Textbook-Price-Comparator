@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context=".MainActivity">
 
     <Button
@@ -15,23 +16,24 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/history_button"
-        android:onClick="launchHistory"
-        android:text="History"/>
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="launchHistory"
+        android:text="History" />
+
+    <Button
         android:id="@+id/favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:onClick="launchFavorite"
         android:text="Favorite"
-        app:layout_constraintLeft_toRightOf="@id/history_button"/>
+        app:layout_constraintLeft_toRightOf="@id/history_button" />
 
 </android.support.constraint.ConstraintLayout>

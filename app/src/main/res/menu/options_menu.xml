@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/buy_button"
-        android:title="Buy"
+    <item
+        android:id="@+id/buy_button"
         android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="always"
+        android:onClick="sortByBuy"
+        android:title="Buy"
         app:actionViewClass="android.support.v7.widget.Button"
-        android:onClick="sortByBuy"/>
+        app:showAsAction="always" />
     <item android:id="@+id/rent_button"
         android:title="Rental"
         android:icon="@android:drawable/ic_menu_search"
