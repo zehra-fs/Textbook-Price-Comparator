@@ -27,6 +27,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * This class is used to display the textbooks stored in the db
+ */
 public class HistoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Textbook>> {
 
     @BindView(R.id.list_view_history)
@@ -61,6 +64,9 @@ public class HistoryActivity extends AppCompatActivity implements LoaderManager.
         getSupportLoaderManager().initLoader(0, null, this);
     }
 
+    /**
+     * Reloads the listview
+     */
     public void dataChanged() {
         getSupportLoaderManager().restartLoader(0, null, this);
     }

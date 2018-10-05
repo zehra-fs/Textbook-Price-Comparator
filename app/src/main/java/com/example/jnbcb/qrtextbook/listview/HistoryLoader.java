@@ -11,6 +11,9 @@ import com.example.jnbcb.qrtextbook.query.Textbook;
 
 import java.util.List;
 
+/**
+ * This class queries the Database to return the textbooks to the history activity
+ */
 public class HistoryLoader extends AsyncTaskLoader<List<Textbook>> {
 
     private Context context;
@@ -25,7 +28,6 @@ public class HistoryLoader extends AsyncTaskLoader<List<Textbook>> {
     public List<Textbook> loadInBackground() {
         ApplicationDB db = ApplicationDB.getInMemoryDatabase(context.getApplicationContext());
         List<Textbook> list = db.textbookModel().getAllTextbooks();
-        Log.e("lib", "" + list.size());
         return list;
     }
 

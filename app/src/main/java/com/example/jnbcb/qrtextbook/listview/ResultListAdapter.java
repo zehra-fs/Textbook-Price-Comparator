@@ -13,13 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
-import com.example.jnbcb.qrtextbook.FavoriteActivity;
 import com.example.jnbcb.qrtextbook.R;
-import com.example.jnbcb.qrtextbook.ResultsActivity;
 import com.example.jnbcb.qrtextbook.database.ApplicationDB;
-import com.example.jnbcb.qrtextbook.query.*;
+import com.example.jnbcb.qrtextbook.query.Result;
+
+import java.util.List;
 
 /**
  * This class fills the listview for the results activity
@@ -52,11 +50,13 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
             holder.price.setText(String.format("%.2f", result.getPrice()));
             holder.condition.setText(result.getCondition());
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(view.getContext());
+            // Checks if result is favorite and selects appropriate button background
             if (result.isFavorited()) {
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        holder.favBut.setVisibility(View.INVISIBLE);
+                        // placeholder
+                        holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
 
                     }
                 });
@@ -64,28 +64,34 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        holder.favBut.setVisibility(View.VISIBLE);
-
+                        // placeholder
+                        holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
                     }
                 });
             }
+            // Favorite or defavorite a result and select appropriate button background
             holder.favBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Thread thread = new Thread() {
-                        public void run() {
-                            result.setFavorited(true);
-                            db.resultModel().updateResult(result);
-                            Log.e("favorited ", result.toString());
-                            ((Activity) context).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ((ResultsActivity) context).dataChanged();
-                                }
-                            });
-                        }
-                    };
-                    thread.start();
+                    if (result.isFavorited() == false) {
+                        holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
+                        Thread thread = new Thread() {
+                            public void run() {
+                                result.setFavorited(true);
+                                db.resultModel().updateResult(result);
+                            }
+                        };
+                        thread.start();
+                    } else {
+                        holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
+                        Thread thread = new Thread() {
+                            public void run() {
+                                result.setFavorited(false);
+                                db.resultModel().updateResult(result);
+                            }
+                        };
+                        thread.start();
+                    }
                 }
             });
         }

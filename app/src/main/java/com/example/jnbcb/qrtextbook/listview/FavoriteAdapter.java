@@ -24,6 +24,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * This class is used to populate the listview of the favorite activity
+ */
 public class FavoriteAdapter extends ArrayAdapter<Result> {
 
     private final Context context;
@@ -52,6 +55,7 @@ public class FavoriteAdapter extends ArrayAdapter<Result> {
             holder.price.setText(String.format("%.2f", result.getPrice()));
             holder.condition.setText(result.getCondition());
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(view.getContext());
+            // Remove favorite from database and reload listview
             holder.delBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -59,7 +63,6 @@ public class FavoriteAdapter extends ArrayAdapter<Result> {
                         public void run() {
                             result.setFavorited(false);
                             db.resultModel().updateResult(result);
-                            Log.e("removed favorite", result.toString());
                             ((Activity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

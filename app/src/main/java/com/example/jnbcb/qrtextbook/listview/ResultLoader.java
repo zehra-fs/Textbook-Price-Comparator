@@ -42,9 +42,8 @@ public class ResultLoader extends AsyncTaskLoader<List<Result>> {
     protected List<Result> onLoadInBackground() {
         ApplicationDB db = ApplicationDB.getInMemoryDatabase(context.getApplicationContext());
         Textbook textbook = db.textbookModel().getTextbook(barcode);
-        Log.e("ResultLoader", textbook + "");
         boolean alreadyExists = textbook != null;
-        Log.e("result loader", "already exists  " + alreadyExists);
+        // Checks if textbook is in database. If not then a query is executed.
         if (!alreadyExists) {
             try {
                 ResultsActivity.currentTextbook = DirectTextbook.query(barcode);
@@ -62,6 +61,7 @@ public class ResultLoader extends AsyncTaskLoader<List<Result>> {
                 ResultsActivity.currentTextbook = new Textbook("", false);
                 return null;
             }
+            // Adds textbook and results to DB
             try {
                 db.textbookModel().insertTextbook(ResultsActivity.currentTextbook);
                 for (Result result : ResultsActivity.currentTextbook.getResults()) {

@@ -13,6 +13,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,10 +24,20 @@ import javax.xml.parsers.ParserConfigurationException;
  * The class queries the DirectTextbook API when given the barcode and returns the resulting Textbook object
  */
 public class DirectTextbook {
+
     private final static String API_KEY = "05e681cb4e446607f509014d7a04219e"; // Must use for all queries
 
     private static String query = "https://www.directtextbook.com/xml.php?key=" + API_KEY + "&ean="; // query to execute
 
+    /**
+     * Queries for xml response and creates Document
+     *
+     * @param isbn isbn of the textbook aka barcode
+     * @return Document used to parse
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     * @throws IOException
+     */
     private static Document getXMLResponse(String isbn) throws SAXException, ParserConfigurationException, IOException {
         URL url = new URL(query + isbn);
         URLConnection conn = url.openConnection();
@@ -49,6 +60,12 @@ public class DirectTextbook {
         return doc;
     }
 
+    /**
+     * Parses Document to created a textbook and results if query was sucessful
+     *
+     * @param doc Document to be parsed
+     * @return Textbook
+     */
     private static Textbook parseXML(Document doc) {
         Textbook textBook = DirectTextbook.createTextbook(doc);
         if (textBook.isSuccess()) {
@@ -57,6 +74,12 @@ public class DirectTextbook {
         return textBook;
     }
 
+    /**
+     * Parses Document to get textbook
+     *
+     * @param doc Document to be parsed
+     * @return Textbook
+     */
     private static Textbook createTextbook(Document doc) {
         Textbook textBook;
         NodeList attribute;
@@ -69,16 +92,29 @@ public class DirectTextbook {
         }
 
         attribute = doc.getElementsByTagName("author");
-        String author = attribute.item(0).getTextContent();
-        textBook.setAuthor(author);
+        if (attribute.item(0) != null) {
+            String author = attribute.item(0).getTextContent();
+            textBook.setAuthor(author);
+        } else {
+            textBook.setAuthor("");
+        }
 
         attribute = doc.getElementsByTagName("publisher");
-        String publisher = attribute.item(0).getTextContent();
-        textBook.setPublisher(publisher);
+        if (attribute.item(0) != null) {
+            String publisher = attribute.item(0).getTextContent();
+            textBook.setPublisher(publisher);
+        } else {
+            textBook.setPublisher("");
+        }
 
         attribute = doc.getElementsByTagName("publicationdate");
-        String yearPub = attribute.item(0).getTextContent();
-        textBook.setYearPublished(yearPub);
+        if (attribute.item(0) != null) {
+            String yearPub = attribute.item(0).getTextContent();
+            textBook.setYearPublished(yearPub);
+        } else {
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+            textBook.setYearPublished(year + "");
+        }
 
         attribute = doc.getElementsByTagName("edition");
         if (attribute.item(0) != null) {
@@ -97,7 +133,6 @@ public class DirectTextbook {
 
     private static List<Result> getResults(Document doc, String isbn) {
         NodeList items = doc.getElementsByTagName("item");
-        //System.out.println(items.getLength()); // testing
         Element element;
         NodeList attribute;
         String vendor;
@@ -111,16 +146,33 @@ public class DirectTextbook {
             element = (Element) items.item(index);
 
             attribute = element.getElementsByTagName("vendor");
-            vendor = attribute.item(0).getTextContent();
+            if (attribute.item(0) != null) {
+                vendor = attribute.item(0).getTextContent();
+            } else {
+                vendor = "";
+            }
+
 
             attribute = element.getElementsByTagName("url");
-            url = attribute.item(0).getTextContent();
+            if (attribute.item(0) != null) {
+                url = attribute.item(0).getTextContent();
+            } else {
+                url = "";
+            }
 
             attribute = element.getElementsByTagName("price");
-            price = Float.valueOf(attribute.item(0).getTextContent());
+            if (attribute.item(0) != null) {
+                price = Float.valueOf(attribute.item(0).getTextContent());
+            } else {
+                price = 0;
+            }
 
             attribute = element.getElementsByTagName("condition");
-            condition = attribute.item(0).getTextContent();
+            if (attribute.item(0) != null) {
+                condition = attribute.item(0).getTextContent();
+            } else {
+                condition = "";
+            }
 
             if (condition.equals("new")) {
                 type = "buy";
@@ -141,6 +193,15 @@ public class DirectTextbook {
         return results;
     }
 
+    /**
+     * Public static method to execute query and return textbook
+     *
+     * @param isbn ISBN of book aka barcode
+     * @return Textbook
+     * @throws SAXException
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
     public static Textbook query(String isbn) throws SAXException, IOException, ParserConfigurationException {
         return DirectTextbook.parseXML(DirectTextbook.getXMLResponse(isbn));
     }
