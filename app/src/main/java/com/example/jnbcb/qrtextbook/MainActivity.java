@@ -2,6 +2,7 @@ package com.example.jnbcb.qrtextbook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +16,8 @@ import android.view.View;
 /**
  * This is the home activity of the app
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private DrawerLayout drawerLayout;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,4 +71,25 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId())
+        {
+            case R.id.barcode:
+                launchBarcode(drawerLayout);
+                break;
+            case R.id.history_button:
+                launchHistory(drawerLayout);
+                break;
+            case R.id.favorite_button:
+                launchFavorite(drawerLayout);
+                break;
+        }
+        drawerLayout.closeDrawers();
+        return true;
+
+    }
+
+
 }
