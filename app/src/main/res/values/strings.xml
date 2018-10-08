@@ -18,4 +18,5 @@
     <string name="barcode_scanner">Barcode Scanner</string>
     <string name="book_history">Search History</string>
     <string name="favorites_nav">Favorites</string>
+    <string name="home">Home</string>
 </resources>

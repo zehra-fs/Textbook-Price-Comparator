@@ -4,11 +4,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,7 +34,12 @@ import butterknife.ButterKnife;
 /**
  * This activity is used to display the favorited results
  */
-public class FavoriteActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>> {
+public class FavoriteActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>>,
+        NavigationView.OnNavigationItemSelectedListener{
+
+private static final int RC_BARCODE_CAPTURE = 9001;
+private DrawerLayout drawerLayout;
+        Toolbar toolbar;
 
     private FavoriteAdapter adapter;
     @BindView(R.id.list_view_favorite)
@@ -58,6 +69,72 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
             }
         });
         getSupportLoaderManager().initLoader(0, null, this);
+        drawerLayout = findViewById(R.id.parent_favorite);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+    }
+
+    public void launchBarcode(View view) {
+        Intent intent = new Intent(this, BarcodeScanner.class);
+        intent.putExtra(BarcodeScanner.AutoFocus, true);
+        intent.putExtra(BarcodeScanner.UseFlash, false);
+
+        startActivityForResult(intent, RC_BARCODE_CAPTURE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void launchHistory(View view) {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void launchFavorite(View view) {
+        Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId())
+        {
+            case R.id.home:
+            {
+                Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.barcode:
+                launchBarcode(drawerLayout);
+                break;
+            case R.id.history_button:
+                launchHistory(drawerLayout);
+                break;
+            case R.id.favorite_button:
+                launchFavorite(drawerLayout);
+                break;
+        }
+        drawerLayout.closeDrawers();
+        return true;
+
     }
 
     /**
