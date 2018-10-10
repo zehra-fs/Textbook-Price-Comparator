@@ -61,6 +61,7 @@ public class HistoryAdapter extends ArrayAdapter<Textbook> {
                             @Override
                             public void run() {
                                 ((HistoryActivity) context).dataChanged();
+
                             }
                         });
                     }

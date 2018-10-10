@@ -57,7 +57,6 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                     public void run() {
                         // placeholder
                         holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
-
                     }
                 });
             } else {
@@ -65,7 +64,7 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                     @Override
                     public void run() {
                         // placeholder
-                        holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
+                        holder.favBut.setBackgroundResource(R.drawable.star_image);
                     }
                 });
             }
@@ -83,7 +82,7 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                         };
                         thread.start();
                     } else {
-                        holder.favBut.setBackgroundResource(R.drawable.common_signin_btn_icon_dark);
+                        holder.favBut.setBackgroundResource(R.drawable.star_image);
                         Thread thread = new Thread() {
                             public void run() {
                                 result.setFavorited(false);
