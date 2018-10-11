@@ -6,22 +6,27 @@
 <!-- Info displayed for the vendor name -->
     <TextView
         android:id="@+id/vendor_name"
+        android:layout_marginTop="30dp"
+        android:textSize="15dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="sans-serif-condensed"
         />
     <!-- Info displayed for the vendor condition -->
     <TextView
         android:id="@+id/condition"
+        android:layout_marginTop="30dp"
+        android:textSize="15dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="sans-serif-condensed"
+
         />
     <!-- Info displayed for the vendor price -->
     <TextView
         android:id="@+id/price"
+        android:layout_marginTop="30dp"
+        android:textSize="15dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -30,11 +35,12 @@
     <!-- Info displayed for the vendor  -->
     <Button
         android:id="@+id/favorite"
-        android:layout_width="80dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/star_image"
-        android:focusable="auto"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/star_on"
+        android:focusable="false"
         android:text="" />
 
     <!--<Button-->

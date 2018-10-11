@@ -56,7 +56,7 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                     @Override
                     public void run() {
                         // placeholder
-                        holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
+                        holder.favBut.setBackgroundResource(R.drawable.star_on);
                     }
                 });
             } else {
@@ -64,7 +64,7 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                     @Override
                     public void run() {
                         // placeholder
-                        holder.favBut.setBackgroundResource(R.drawable.star_image);
+                        holder.favBut.setBackgroundResource(R.drawable.star_off);
                     }
                 });
             }
@@ -73,7 +73,7 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                 @Override
                 public void onClick(View v) {
                     if (result.isFavorited() == false) {
-                        holder.favBut.setBackgroundResource(R.drawable.cast_ic_notification_0);
+                        holder.favBut.setBackgroundResource(R.drawable.star_on);
                         Thread thread = new Thread() {
                             public void run() {
                                 result.setFavorited(true);
@@ -82,7 +82,7 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
                         };
                         thread.start();
                     } else {
-                        holder.favBut.setBackgroundResource(R.drawable.star_image);
+                        holder.favBut.setBackgroundResource(R.drawable.star_off);
                         Thread thread = new Thread() {
                             public void run() {
                                 result.setFavorited(false);

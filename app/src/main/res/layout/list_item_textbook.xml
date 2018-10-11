@@ -8,21 +8,21 @@
     <TextView
         android:id="@+id/text_name"
         android:layout_width="0dp"
+        android:textSize="15dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_centerInParent="true"
         android:layout_weight="1" />
 
     <Button
         android:id="@+id/delete_history"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/colorAccent"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="del"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/delete_icon"
+        android:focusable="false"
+        android:text=""
         />
 
 

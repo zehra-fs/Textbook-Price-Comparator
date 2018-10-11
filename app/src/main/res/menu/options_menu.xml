@@ -3,20 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/buy_button"
-        android:icon="@android:drawable/ic_menu_search"
         android:onClick="sortByBuy"
         android:title="Buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:actionViewClass="android.support.v7.widget.Button"
         app:showAsAction="always" />
     <item android:id="@+id/rent_button"
         android:title="Rental"
-        android:icon="@android:drawable/ic_menu_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.Button"
         android:onClick="sortByRent"/>
     <item android:id="@+id/ebook_button"
         android:title="Ebook"
-        android:icon="@android:drawable/ic_menu_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.Button"
         android:onClick="sortByEbook"/>
