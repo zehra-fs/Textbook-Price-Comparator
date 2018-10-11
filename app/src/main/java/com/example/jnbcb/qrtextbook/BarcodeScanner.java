@@ -32,11 +32,17 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -66,7 +72,8 @@ import java.io.IOException;
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and ID of each barcode.
  */
-public final class BarcodeScanner extends AppCompatActivity implements BarcodeGraphicTracker.BarcodeUpdateListener {
+public final class BarcodeScanner extends AppCompatActivity implements BarcodeGraphicTracker.BarcodeUpdateListener,
+        NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "Barcode-reader";
 
     // intent request code to handle updating play services if needed.
@@ -87,6 +94,10 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
     // helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
+
+    private static final int RC_BARCODE_CAPTURE = 9002;
+    private DrawerLayout drawerLayout;
+    Toolbar toolbar;
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -115,6 +126,74 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
         } else {
             requestCameraPermission();
         }
+
+        drawerLayout = findViewById(R.id.parent_Barcode);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewBarcode);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+
+    }
+
+    public void launchBarcode(View view) {
+        Intent intent = new Intent(this, BarcodeScanner.class);
+        intent.putExtra(BarcodeScanner.AutoFocus, true);
+        intent.putExtra(BarcodeScanner.UseFlash, false);
+
+        startActivityForResult(intent, RC_BARCODE_CAPTURE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void launchHistory(View view) {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void launchFavorite(View view) {
+        Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId())
+        {
+            case R.id.home:
+            {
+                Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                break;
+            }
+            case R.id.barcode:
+                launchBarcode(drawerLayout);
+                break;
+            case R.id.history_button:
+                launchHistory(drawerLayout);
+                break;
+            case R.id.favorite_button:
+                launchFavorite(drawerLayout);
+                break;
+        }
+        drawerLayout.closeDrawers();
+        return true;
 
     }
 
