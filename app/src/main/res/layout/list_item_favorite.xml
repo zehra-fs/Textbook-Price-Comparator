@@ -6,28 +6,53 @@
 
     <TextView
         android:id="@+id/vendor_name_favorite"
+        android:textSize="15dp"
+        android:layout_marginTop="40dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/condition_favorite"
+        android:textSize="15dp"
+        android:layout_marginTop="40dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/price_favorite"
+        android:textSize="15dp"
+        android:layout_marginTop="40dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <Button
         android:id="@+id/delete"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/delete_icon"
         android:focusable="false"
-        android:text="del" />
+        android:text=""
+        />
+
+    <!--
+    <Button
+        android:id="@+id/delete"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorAccent"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:focusable="false"
+        android:text="del"
+        />
+-->
 
 </LinearLayout>

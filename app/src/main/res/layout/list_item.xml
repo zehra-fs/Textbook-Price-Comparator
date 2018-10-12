@@ -3,32 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height"
     android:orientation="horizontal">
-
+<!-- Info displayed for the vendor name -->
     <TextView
         android:id="@+id/vendor_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
-    <TextView
-        android:id="@+id/condition"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/favorite"
+        android:layout_gravity="center_vertical"
+        android:textSize="15dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        />
+    <!-- Info displayed for the vendor condition -->
+    <TextView
+        android:id="@+id/condition"
+        android:layout_gravity="center_vertical"
+        android:textSize="15dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        />
+    <!-- Info displayed for the vendor price -->
+    <TextView
+        android:id="@+id/price"
+        android:layout_gravity="center_vertical"
+        android:textSize="15dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <!-- Info displayed for the vendor  -->
+    <Button
+        android:id="@+id/favorite"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/star_on"
         android:focusable="false"
-        android:text="fav" />
+        android:text="" />
 
     <!--<Button-->
         <!--android:id="@+id/delete"-->

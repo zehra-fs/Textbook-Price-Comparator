@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height"
+    android:baselineAligned="false"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/text_name"
         android:layout_width="0dp"
+        android:textSize="15dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_centerInParent="true"/>
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/delete_history"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/delete_icon"
         android:focusable="false"
-        android:text="del" />
+        android:text=""
+        />
+
 
 </LinearLayout>
