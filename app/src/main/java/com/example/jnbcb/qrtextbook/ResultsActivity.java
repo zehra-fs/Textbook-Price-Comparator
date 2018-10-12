@@ -193,6 +193,17 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
                 }
             };
             thread.start();
+            drawerLayout = findViewById(R.id.drawer);
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewResults);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            ActionBar actionbar = getSupportActionBar();
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             return;
         }
         if (checkConnection()) {
