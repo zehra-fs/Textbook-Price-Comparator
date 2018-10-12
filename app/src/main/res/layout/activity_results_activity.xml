@@ -11,10 +11,11 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorBackgroundFloating"
-        android:cacheColorHint="@android:color/background_light"
-        android:orientation="vertical"
         android:id="@+id/parent">
+        <!--android:background="?attr/colorBackgroundFloating"-->
+        <!--android:cacheColorHint="@android:color/background_light"-->
+        <!--android:orientation="vertical"-->
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
