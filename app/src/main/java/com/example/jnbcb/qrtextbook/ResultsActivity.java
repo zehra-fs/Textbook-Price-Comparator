@@ -200,7 +200,7 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         } else {
             emptyState.setText("No connection"); // add string to strings.xml
         }
-        drawerLayout = findViewById(R.id.parent);
+        drawerLayout = findViewById(R.id.drawer);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewResults);
         navigationView.setNavigationItemSelectedListener(this);
