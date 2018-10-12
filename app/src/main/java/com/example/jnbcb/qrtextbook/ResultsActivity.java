@@ -185,12 +185,12 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(this);
             Thread thread = new Thread() {
                 public void run() {
-                    bar.setVisibility(View.VISIBLE);
+                 //   bar.setVisibility(View.VISIBLE);
                     Textbook textbook = ((Textbook) getIntent().getSerializableExtra("textbook"));
                     List<Result> results = db.resultModel().getResults(textbook.getIsbn());
                     ResultsActivity.currentTextbook.setResults(results);
                     adapter.addAll(results);
-                    bar.setVisibility(View.INVISIBLE);
+                //    bar.setVisibility(View.INVISIBLE);
                 }
             };
             thread.start();
