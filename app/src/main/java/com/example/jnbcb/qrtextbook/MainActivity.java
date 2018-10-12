@@ -17,29 +17,14 @@ import android.view.View;
  * This is the home activity of the app
  */
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        {
 
     private static final int RC_BARCODE_CAPTURE = 9001;
-    private DrawerLayout drawerLayout;
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-
     }
 
     public void launchBarcode(View view) {
@@ -50,18 +35,6 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, RC_BARCODE_CAPTURE);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void launchHistory(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
@@ -70,25 +43,6 @@ public class MainActivity extends AppCompatActivity
     public void launchFavorite(View view) {
         Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId())
-        {
-            case R.id.barcode:
-                launchBarcode(drawerLayout);
-                break;
-            case R.id.history_button:
-                launchHistory(drawerLayout);
-                break;
-            case R.id.favorite_button:
-                launchFavorite(drawerLayout);
-                break;
-        }
-        drawerLayout.closeDrawers();
-        return true;
-
     }
 
 
