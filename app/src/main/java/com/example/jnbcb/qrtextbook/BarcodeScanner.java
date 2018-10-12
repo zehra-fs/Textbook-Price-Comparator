@@ -97,7 +97,7 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
 
     private static final int RC_BARCODE_CAPTURE = 9002;
     private DrawerLayout drawerLayout;
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -141,13 +141,7 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
 
     }
 
-    public void launchBarcode(View view) {
-        Intent intent = new Intent(this, BarcodeScanner.class);
-        intent.putExtra(BarcodeScanner.AutoFocus, true);
-        intent.putExtra(BarcodeScanner.UseFlash, false);
 
-        startActivityForResult(intent, RC_BARCODE_CAPTURE);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -161,25 +155,36 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
         return super.onOptionsItemSelected(item);
     }
 
-    public void launchHistory(View view) {
+    private void launchBarcode(View view) {
+        Intent intent = new Intent(this, BarcodeScanner.class);
+        intent.putExtra(BarcodeScanner.AutoFocus, true);
+        intent.putExtra(BarcodeScanner.UseFlash, false);
+
+        startActivityForResult(intent, RC_BARCODE_CAPTURE);
+    }
+
+    private void launchHistory(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
-    public void launchFavorite(View view) {
+    private void launchFavorite(View view) {
         Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
         startActivity(intent);
     }
 
+    private void launchHome(View view){
+        Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId())
         {
             case R.id.home:
             {
-                Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                launchHome(drawerLayout);
                 break;
             }
             case R.id.barcode:

@@ -65,16 +65,6 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         inflater.inflate(R.menu.options_menu, menu);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         return true;
-
-
-    }
-
-    public void launchBarcode(View view) {
-        Intent intent = new Intent(this, BarcodeScanner.class);
-        intent.putExtra(BarcodeScanner.AutoFocus, true);
-        intent.putExtra(BarcodeScanner.UseFlash, false);
-
-        startActivityForResult(intent, RC_BARCODE_CAPTURE);
     }
 
     @Override
@@ -89,25 +79,36 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         return super.onOptionsItemSelected(item);
     }
 
-    public void launchHistory(View view) {
+    private void launchHistory(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
-    public void launchFavorite(View view) {
+    private void launchFavorite(View view) {
         Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
         startActivity(intent);
     }
 
+    private void launchBarcode(View view) {
+        Intent intent = new Intent(this, BarcodeScanner.class);
+        intent.putExtra(BarcodeScanner.AutoFocus, true);
+        intent.putExtra(BarcodeScanner.UseFlash, false);
+
+        startActivityForResult(intent, RC_BARCODE_CAPTURE);
+    }
+
+    private void launchHome(View view) {
+        Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId())
         {
             case R.id.home:
             {
-                Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+               launchHome(drawerLayout);
                 break;
             }
             case R.id.barcode:
