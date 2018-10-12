@@ -8,9 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +40,8 @@ import butterknife.ButterKnife;
 /**
  * This activity displays the results of a query in a listview with the option to sort by type
  */
-public class ResultsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>> {
+public class ResultsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>>,
+        NavigationView.OnNavigationItemSelectedListener{
 
     public static Textbook currentTextbook;
 
@@ -48,12 +54,76 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     @BindView(R.id.bar)
     ProgressBar bar;
 
+    private static final int RC_BARCODE_CAPTURE = 9001;
+    private DrawerLayout drawerLayout;
+    Toolbar toolbar;
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void launchHistory(View view) {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchFavorite(View view) {
+        Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchBarcode(View view) {
+        Intent intent = new Intent(this, BarcodeScanner.class);
+        intent.putExtra(BarcodeScanner.AutoFocus, true);
+        intent.putExtra(BarcodeScanner.UseFlash, false);
+
+        startActivityForResult(intent, RC_BARCODE_CAPTURE);
+    }
+
+    private void launchHome(View view) {
+        Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId())
+        {
+            case R.id.home:
+            {
+               launchHome(drawerLayout);
+                break;
+            }
+            case R.id.barcode:
+                launchBarcode(drawerLayout);
+                break;
+            case R.id.history_button:
+                launchHistory(drawerLayout);
+                break;
+            case R.id.favorite_button:
+                launchFavorite(drawerLayout);
+                break;
+        }
+        drawerLayout.closeDrawers();
+        return true;
+
     }
 
     public void sortByBuy(MenuItem item) {
@@ -116,12 +186,12 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(this);
             Thread thread = new Thread() {
                 public void run() {
-                    bar.setVisibility(View.VISIBLE);
+                 //   bar.setVisibility(View.VISIBLE);
                     Textbook textbook = ((Textbook) getIntent().getSerializableExtra("textbook"));
                     List<Result> results = db.resultModel().getResults(textbook.getIsbn());
                     ResultsActivity.currentTextbook.setResults(results);
                     adapter.addAll(results);
-                    bar.setVisibility(View.INVISIBLE);
+                //    bar.setVisibility(View.INVISIBLE);
                 }
             };
             thread.start();
@@ -132,7 +202,17 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         } else {
             emptyState.setText("No connection"); // add string to strings.xml
         }
+        drawerLayout = findViewById(R.id.parent);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewResults);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
     }
 
     /**
