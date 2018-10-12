@@ -25,6 +25,8 @@
 
     <Button
         android:id="@+id/history_button"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="launchHistory"
@@ -33,6 +35,8 @@
 
     <Button
         android:id="@+id/favorite_button"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="launchFavorite"
