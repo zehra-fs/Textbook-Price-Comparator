@@ -37,20 +37,20 @@ import butterknife.ButterKnife;
  * This class is used to display the textbooks stored in the db
  */
 public class HistoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Textbook>>,
-        NavigationView.OnNavigationItemSelectedListener{
+        NavigationView.OnNavigationItemSelectedListener {
 
-private static final int RC_BARCODE_CAPTURE = 9001;
-private DrawerLayout drawerLayout;
-        Toolbar toolbar;
+    private static final int RC_BARCODE_CAPTURE = 9001;
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
 
 
     @BindView(R.id.list_view_history)
-    ListView listView;
+    ListView mListView;
     @BindView(R.id.empty_state_history)
-    TextView emptyState;
+    TextView mEmptyState;
     @BindView(R.id.bar_history)
-    ProgressBar bar;
-    HistoryAdapter adapter;
+    ProgressBar mProgressBar;
+    HistoryAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,30 +58,27 @@ private DrawerLayout drawerLayout;
         setContentView(R.layout.activity_history);
         ButterKnife.bind(this);
         List<Textbook> list = new ArrayList<>();
-        adapter = new HistoryAdapter(this, R.layout.list_item_textbook, list);
-        listView.setAdapter(adapter);
-        listView.setEmptyView(emptyState);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter = new HistoryAdapter(this, R.layout.list_item_textbook, list);
+        mListView.setAdapter(mAdapter);
+        mListView.setEmptyView(mEmptyState);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Textbook textbook = adapter.getItem(position);
+                Textbook textbook = mAdapter.getItem(position);
                 ResultsActivity.currentTextbook = textbook;
-                Intent intent = new Intent(view.getContext(), ResultsActivity.class);
-                intent.putExtra("history", true);
-                intent.putExtra("textbook", textbook);
-                intent.putExtra("barcode", textbook.getIsbn());
+                Intent intent = ResultsActivity.historyIntent(view.getContext(), textbook.getIsbn());
                 startActivity(intent);
             }
         });
         getSupportLoaderManager().initLoader(0, null, this);
 
-        drawerLayout = findViewById(R.id.parent_history);
+        mDrawerLayout = findViewById(R.id.parent_history);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewHist);
         navigationView.setNavigationItemSelectedListener(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbarHist);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbarHist);
+        setSupportActionBar(mToolbar);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -89,14 +86,11 @@ private DrawerLayout drawerLayout;
     }
 
 
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -121,31 +115,30 @@ private DrawerLayout drawerLayout;
     }
 
     private void launchHome(View view) {
-        Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+        Intent intent = new Intent(mDrawerLayout.getContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
 
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId())
-        {
-            case R.id.home:
-            {
-               launchHome(drawerLayout);
+        switch (menuItem.getItemId()) {
+            case R.id.home: {
+                launchHome(mDrawerLayout);
                 break;
             }
             case R.id.barcode:
-                launchBarcode(drawerLayout);
+                launchBarcode(mDrawerLayout);
                 break;
             case R.id.history_button:
-                launchHistory(drawerLayout);
+                launchHistory(mDrawerLayout);
                 break;
             case R.id.favorite_button:
-                launchFavorite(drawerLayout);
+                launchFavorite(mDrawerLayout);
                 break;
         }
-        drawerLayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
         return true;
 
     }
@@ -160,26 +153,26 @@ private DrawerLayout drawerLayout;
     @NonNull
     @Override
     public Loader<List<Textbook>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        bar.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
         Log.e("loader", "start loader");
         return new HistoryLoader(this);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<Textbook>> loader, List<Textbook> textbooks) {
-        adapter.clear();
-        bar.setVisibility(View.INVISIBLE);
+        mAdapter.clear();
+        mProgressBar.setVisibility(View.INVISIBLE);
         if (textbooks.isEmpty()) {
-            emptyState.setText("Your history is empty!");
+            mEmptyState.setText("Your history is empty!");
         } else {
             Collections.reverse(textbooks);
-            adapter.addAll(textbooks);
+            mAdapter.addAll(textbooks);
         }
         Log.e("loader", "finish loader");
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<List<Textbook>> loader) {
-        adapter.clear();
+        mAdapter.clear();
     }
 }

@@ -96,8 +96,8 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
     private GestureDetector gestureDetector;
 
     private static final int RC_BARCODE_CAPTURE = 9002;
-    private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -127,13 +127,13 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
             requestCameraPermission();
         }
 
-        drawerLayout = findViewById(R.id.parent_Barcode);
+        mDrawerLayout = findViewById(R.id.parent_Barcode);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewBarcode);
         navigationView.setNavigationItemSelectedListener(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -149,7 +149,7 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
         switch(item.getItemId())
         {
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -174,7 +174,7 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
     }
 
     private void launchHome(View view){
-        Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+        Intent intent = new Intent(mDrawerLayout.getContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -184,20 +184,20 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
         {
             case R.id.home:
             {
-                launchHome(drawerLayout);
+                launchHome(mDrawerLayout);
                 break;
             }
             case R.id.barcode:
-                launchBarcode(drawerLayout);
+                launchBarcode(mDrawerLayout);
                 break;
             case R.id.history_button:
-                launchHistory(drawerLayout);
+                launchHistory(mDrawerLayout);
                 break;
             case R.id.favorite_button:
-                launchFavorite(drawerLayout);
+                launchFavorite(mDrawerLayout);
                 break;
         }
-        drawerLayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
         return true;
 
     }
@@ -514,11 +514,9 @@ public final class BarcodeScanner extends AppCompatActivity implements BarcodeGr
 
     @Override
     public void onBarcodeDetected(Barcode barcode) {
-        Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra("barcode", barcode.displayValue);
-        intent.putExtra("history", false);
+        Log.d(TAG, barcode.displayValue);
+        Intent intent = ResultsActivity.barcodeIntent(this, barcode.displayValue);
         startActivity(intent);
-
     }
 
 }

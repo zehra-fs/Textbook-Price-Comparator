@@ -35,19 +35,19 @@ import butterknife.ButterKnife;
  * This activity is used to display the favorited results
  */
 public class FavoriteActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Result>>,
-        NavigationView.OnNavigationItemSelectedListener{
+        NavigationView.OnNavigationItemSelectedListener {
 
-private static final int RC_BARCODE_CAPTURE = 9001;
-private DrawerLayout drawerLayout;
-        Toolbar toolbar;
+    private static final int RC_BARCODE_CAPTURE = 9001;
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
 
-    private FavoriteAdapter adapter;
+    private FavoriteAdapter mAdapter;
     @BindView(R.id.list_view_favorite)
-    ListView listView;
+    ListView mListView;
     @BindView(R.id.empty_state_favorite)
-    TextView emptyState;
+    TextView mEmptyState;
     @BindView(R.id.bar_favorite)
-    ProgressBar bar;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +55,13 @@ private DrawerLayout drawerLayout;
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
         List<Result> list = new ArrayList<>();
-        adapter = new FavoriteAdapter(this, R.layout.list_item_favorite, list);
-        listView.setAdapter(adapter);
-        listView.setEmptyView(emptyState);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter = new FavoriteAdapter(this, R.layout.list_item_favorite, list);
+        mListView.setAdapter(mAdapter);
+        mListView.setEmptyView(mEmptyState);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Result result = adapter.getItem(position);
+                Result result = mAdapter.getItem(position);
                 Uri uri = Uri.parse(result.getUrl());
                 Log.e("url", result.getUrl());
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, uri);
@@ -70,13 +70,13 @@ private DrawerLayout drawerLayout;
         });
         getSupportLoaderManager().initLoader(0, null, this);
 
-        drawerLayout = findViewById(R.id.parent_favorite);
+        mDrawerLayout = findViewById(R.id.parent_favorite);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -85,12 +85,10 @@ private DrawerLayout drawerLayout;
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -115,30 +113,29 @@ private DrawerLayout drawerLayout;
     }
 
     private void launchHome(View view) {
-        Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+        Intent intent = new Intent(mDrawerLayout.getContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId())
-        {
-            case R.id.home:
-            {
-                launchHome(drawerLayout);
+        switch (menuItem.getItemId()) {
+            case R.id.home: {
+                launchHome(mDrawerLayout);
                 break;
             }
             case R.id.barcode:
-                launchBarcode(drawerLayout);
+                launchBarcode(mDrawerLayout);
                 break;
             case R.id.history_button:
-                launchHistory(drawerLayout);
+                launchHistory(mDrawerLayout);
                 break;
             case R.id.favorite_button:
-                launchFavorite(drawerLayout);
+                launchFavorite(mDrawerLayout);
                 break;
         }
-        drawerLayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
         return true;
 
     }
@@ -153,23 +150,23 @@ private DrawerLayout drawerLayout;
     @NonNull
     @Override
     public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        bar.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
         return new FavoriteLoader(this);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> results) {
-        adapter.clear();
-        bar.setVisibility(View.INVISIBLE);
+        mAdapter.clear();
+        mProgressBar.setVisibility(View.INVISIBLE);
         if (results.isEmpty()) {
-            emptyState.setText("You have no favorites!");
+            mEmptyState.setText("You have no favorites!");
         } else {
-            adapter.addAll(results);
+            mAdapter.addAll(results);
         }
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
-        adapter.clear();
+        mAdapter.clear();
     }
 }

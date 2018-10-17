@@ -45,18 +45,18 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
 
     public static Textbook currentTextbook;
 
-    private String barcode;
-    private ResultListAdapter adapter;
+    private String mBarcode;
+    private ResultListAdapter mAdapter;
     @BindView(R.id.list_view)
     ListView listView;
     @BindView(R.id.empty_state)
     TextView emptyState;
     @BindView(R.id.bar)
-    ProgressBar bar;
+    ProgressBar mProgressBar;
 
     private static final int RC_BARCODE_CAPTURE = 9001;
-    private DrawerLayout drawerLayout;
-    Toolbar toolbar;
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
 
 
     @Override
@@ -73,7 +73,7 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         switch(item.getItemId())
         {
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -98,7 +98,7 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     }
 
     private void launchHome(View view) {
-        Intent intent = new Intent(drawerLayout.getContext(), MainActivity.class);
+        Intent intent = new Intent(mDrawerLayout.getContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -108,20 +108,20 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         {
             case R.id.home:
             {
-               launchHome(drawerLayout);
+               launchHome(mDrawerLayout);
                 break;
             }
             case R.id.barcode:
-                launchBarcode(drawerLayout);
+                launchBarcode(mDrawerLayout);
                 break;
             case R.id.history_button:
-                launchHistory(drawerLayout);
+                launchHistory(mDrawerLayout);
                 break;
             case R.id.favorite_button:
-                launchFavorite(drawerLayout);
+                launchFavorite(mDrawerLayout);
                 break;
         }
-        drawerLayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
         return true;
 
     }
@@ -134,8 +134,8 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
                 filterResults.add(result);
             }
         }
-        adapter.clear();
-        adapter.addAll(filterResults);
+        mAdapter.clear();
+        mAdapter.addAll(filterResults);
     }
 
     public void sortByRent(MenuItem item) {
@@ -146,8 +146,8 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
                 filterResults.add(result);
             }
         }
-        adapter.clear();
-        adapter.addAll(filterResults);
+        mAdapter.clear();
+        mAdapter.addAll(filterResults);
     }
 
     public void sortByEbook(MenuItem item) {
@@ -158,8 +158,8 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
                 filterResults.add(result);
             }
         }
-        adapter.clear();
-        adapter.addAll(filterResults);
+        mAdapter.clear();
+        mAdapter.addAll(filterResults);
     }
 
     @Override
@@ -167,15 +167,15 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results_activity);
         ButterKnife.bind(this);
-        barcode = getIntent().getExtras().getString("barcode");
+        mBarcode = getIntent().getExtras().getString("barcode");
         List<Result> list = new ArrayList<>();
-        adapter = new ResultListAdapter(this, R.layout.list_item, list);
-        listView.setAdapter(adapter);
+        mAdapter = new ResultListAdapter(this, R.layout.list_item, list);
+        listView.setAdapter(mAdapter);
         listView.setEmptyView(emptyState);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Result result = adapter.getItem(position);
+                Result result = mAdapter.getItem(position);
                 Uri uri = Uri.parse(result.getUrl());
                 Log.e("url", result.getUrl());
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, uri);
@@ -186,20 +186,20 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(this);
             Thread thread = new Thread() {
                 public void run() {
-                    Textbook textbook = ((Textbook) getIntent().getSerializableExtra("textbook"));
-                    List<Result> results = db.resultModel().getResults(textbook.getIsbn());
+                    String isbn = getIntent().getStringExtra("barcode");
+                    List<Result> results = db.resultModel().getResults(isbn);
                     ResultsActivity.currentTextbook.setResults(results);
-                    adapter.addAll(results);
+                    mAdapter.addAll(results);
                 }
             };
             thread.start();
-            drawerLayout = findViewById(R.id.drawer);
+            mDrawerLayout = findViewById(R.id.drawer);
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewResults);
             navigationView.setNavigationItemSelectedListener(this);
 
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+            mToolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(mToolbar);
 
             ActionBar actionbar = getSupportActionBar();
             actionbar.setDisplayHomeAsUpEnabled(true);
@@ -211,13 +211,13 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         } else {
             emptyState.setText("No connection"); // add string to strings.xml
         }
-        drawerLayout = findViewById(R.id.drawer);
+        mDrawerLayout = findViewById(R.id.drawer);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewResults);
         navigationView.setNavigationItemSelectedListener(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -240,24 +240,38 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     @NonNull
     @Override
     public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        bar.setVisibility(View.VISIBLE);
-        return new ResultLoader(this, barcode);
+        mProgressBar.setVisibility(View.VISIBLE);
+        return new ResultLoader(this, mBarcode);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> resultList) {
-        adapter.clear();
-        bar.setVisibility(View.INVISIBLE);
+        mAdapter.clear();
+        mProgressBar.setVisibility(View.INVISIBLE);
         if (!currentTextbook.isSuccess()) {
-            emptyState.setText("Invalid barcode");
+            emptyState.setText("Invalid Barcode");
             return;
         }
-        adapter.addAll(resultList);
+        mAdapter.addAll(resultList);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
-        adapter.clear();
+        mAdapter.clear();
+    }
+
+    public static Intent barcodeIntent(Context context, String barcode){
+        Intent intent = new Intent(context, ResultsActivity.class);
+        intent.putExtra("barcode", barcode);
+        intent.putExtra("history", false);
+        return intent;
+    }
+
+    public static Intent historyIntent(Context context, String isbn){
+        Intent intent = new Intent(context, ResultsActivity.class);
+        intent.putExtra("history", true);
+        intent.putExtra("barcode", isbn);
+        return intent;
     }
 
 }
