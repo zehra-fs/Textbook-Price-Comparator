@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ResultsActivity"
-    android:id="@+id/parent">
+    android:id="@+id/drawer"
+    >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,9 +16,9 @@
         android:orientation="vertical"
         android:dividerHeight='1dp'
         android:divider="@color/design_default_color_primary_dark"
-        android:id="@+id/constrResults"
-
+        android:id="@+id/parent"
         >
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -57,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="invisible"
-        app:layout_constraintCircle="@+id/constrResults"
+        app:layout_constraintCircle="@+id/parent"
         app:layout_constraintCircleRadius="0dp"/>
 
     </android.support.constraint.ConstraintLayout>
