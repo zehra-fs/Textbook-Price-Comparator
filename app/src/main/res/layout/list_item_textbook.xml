@@ -7,8 +7,9 @@
 
     <TextView
         android:id="@+id/text_name"
+        android:textStyle="bold"
+        android:textSize="13dp"
         android:layout_width="0dp"
-        android:textSize="15dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_centerInParent="true"
@@ -16,10 +17,10 @@
 
     <Button
         android:id="@+id/delete_history"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginRight="20dp"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/delete_icon"
         android:focusable="false"
         android:text=""

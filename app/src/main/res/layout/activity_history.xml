@@ -11,7 +11,11 @@
         android:id="@+id/list_view_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:background="?attr/colorBackgroundFloating"
+        android:cacheColorHint="@android:color/background_light"
+        android:dividerHeight='1dp'
+        android:divider="@color/design_default_color_primary_dark"/>
 
     <TextView
         android:id="@+id/empty_state_history"

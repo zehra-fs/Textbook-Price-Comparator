@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ResultsActivity"
-    android:id="@+id/parent">
+    android:id="@+id/parent"
+    android:padding='8dp'>
 
     <ListView
         android:id="@+id/list_view"
@@ -13,7 +14,10 @@
         android:layout_height="match_parent"
         android:background="?attr/colorBackgroundFloating"
         android:cacheColorHint="@android:color/background_light"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:dividerHeight='1dp'
+        android:divider="@color/design_default_color_primary_dark"
+        />
 
     <TextView
         android:id="@+id/empty_state"
