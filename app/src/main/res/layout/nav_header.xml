@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimary">
+
     <ImageView
-    android:layout_width="180dp"
-    android:layout_height="130dp"
-    android:layout_marginBottom="15dp"
-    android:layout_marginTop="15dp"
-    android:background="@drawable/ic_android_black_24dp"/>
+        android:layout_width="186dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/header1" />
 
 </LinearLayout>
