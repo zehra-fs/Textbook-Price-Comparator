@@ -127,6 +127,9 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     }
 
     public void sortByBuy(MenuItem item) {
+        if (!ResultsActivity.currentTextbook.isSuccess()){
+            return;
+        }
         ArrayList<Result> filterResults = new ArrayList<>();
         Log.e("sort buy", true + "");
         for (Result result : currentTextbook.getResults()) {
@@ -139,6 +142,9 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     }
 
     public void sortByRent(MenuItem item) {
+        if (!ResultsActivity.currentTextbook.isSuccess()){
+            return;
+        }
         ArrayList<Result> filterResults = new ArrayList<>();
         Log.e("sort rent", true + "");
         for (Result result : currentTextbook.getResults()) {
@@ -151,6 +157,9 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
     }
 
     public void sortByEbook(MenuItem item) {
+        if (!ResultsActivity.currentTextbook.isSuccess()){
+            return;
+        }
         ArrayList<Result> filterResults = new ArrayList<>();
         Log.e("sort ebook", true + "");
         for (Result result : currentTextbook.getResults()) {
