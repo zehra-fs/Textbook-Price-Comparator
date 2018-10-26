@@ -11,7 +11,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/constrHist">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarHist"
@@ -59,6 +60,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_view"
         />
 
