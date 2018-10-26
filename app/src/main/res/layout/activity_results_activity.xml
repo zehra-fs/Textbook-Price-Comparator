@@ -6,16 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ResultsActivity"
     android:id="@+id/drawer"
-   >
+    >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/parent">
-        <!--android:background="?attr/colorBackgroundFloating"-->
-        <!--android:cacheColorHint="@android:color/background_light"-->
-        <!--android:orientation="vertical"-->
-
+        android:background="?attr/colorBackgroundFloating"
+        android:cacheColorHint="@android:color/background_light"
+        android:orientation="vertical"
+        android:dividerHeight='1dp'
+        android:divider="@color/design_default_color_primary_dark"
+        android:id="@+id/parent"
+        >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -35,13 +37,13 @@
             android:id="@+id/list_view"
             android:layout_width="match_parent"
             android:layout_height="510dp"
+            android:dividerHeight="2dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/empty_state"
-        style=""
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fontFamily="monospace"
@@ -55,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="invisible"
-        app:layout_constraintCircle="@id/parent"
+        app:layout_constraintCircle="@+id/parent"
         app:layout_constraintCircleRadius="0dp"/>
 
     </android.support.constraint.ConstraintLayout>
