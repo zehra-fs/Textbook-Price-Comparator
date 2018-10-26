@@ -32,10 +32,11 @@
         <ListView
             android:id="@+id/list_view_favorite"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="510dp"
+            android:dividerHeight="2dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
->>>>>>> fcd700e7b94c6dad5e9b782f8bc47fbfaa0790dc
 
     <TextView
         android:id="@+id/empty_state_favorite"

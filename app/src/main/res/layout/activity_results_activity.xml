@@ -19,7 +19,6 @@
         android:id="@+id/parent"
         >
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -38,13 +37,13 @@
             android:id="@+id/list_view"
             android:layout_width="match_parent"
             android:layout_height="510dp"
+            android:dividerHeight="2dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/empty_state"
-        style=""
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fontFamily="monospace"
