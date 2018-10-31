@@ -22,4 +22,5 @@
     <string name="history">History</string>
     <string name="favorites">Favorites</string>
     <string name="barcode">Scan Book</string>
+    <string name="title_search">Search By Title</string>
 </resources>
