@@ -61,7 +61,7 @@ public class DirectTextbook {
     }
 
     /**
-     * Parses Document to created a textbook and results if query was sucessful
+     * Parses Document to created a textbook and results if query was successful
      *
      * @param doc Document to be parsed
      * @return Textbook

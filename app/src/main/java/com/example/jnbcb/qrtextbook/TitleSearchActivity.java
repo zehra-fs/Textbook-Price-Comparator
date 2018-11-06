@@ -104,4 +104,7 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
 
     }
 
+    public void QueryForBook(View view) {
+
+    }
 }
