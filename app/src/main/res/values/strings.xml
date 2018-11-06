@@ -24,4 +24,5 @@
     <string name="barcode">Scan Book</string>
     <string name="title_search">Search By Title</string>
     <string name="title_search_btn">Search For Book</string>
+    <string name="search_hint">Enter a book title</string>
 </resources>

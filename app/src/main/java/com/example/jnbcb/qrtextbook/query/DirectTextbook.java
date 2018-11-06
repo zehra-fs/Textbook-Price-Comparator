@@ -1,5 +1,7 @@
 package com.example.jnbcb.qrtextbook.query;
 
+import android.util.Log;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -27,8 +29,10 @@ public class DirectTextbook {
 
     private final static String API_KEY = "05e681cb4e446607f509014d7a04219e"; // Must use for all queries
 
-    private static String query = "https://www.directtextbook.com/xml.php?key=" + API_KEY + "&ean="; // query to execute
+    private static String queryISBN = "https://www.directtextbook.com/xml.php?key=" + API_KEY + "&ean="; // queryISBN to execute
 
+    //http://www.directtextbook.com/xml_search.php?key=05e681cb4e446607f509014d7a04219e&query=macionis
+    private static String queryTitle = "https://www.directtextbook.com/xml_search.php?key=" + API_KEY + "&query=";
     /**
      * Queries for xml response and creates Document
      *
@@ -39,7 +43,7 @@ public class DirectTextbook {
      * @throws IOException
      */
     private static Document getXMLResponse(String isbn) throws SAXException, ParserConfigurationException, IOException {
-        URL url = new URL(query + isbn);
+        URL url = new URL(queryISBN + isbn);
         URLConnection conn = url.openConnection();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -60,8 +64,32 @@ public class DirectTextbook {
         return doc;
     }
 
+    private static Document getXMLResponseTitle(String title) throws SAXException, ParserConfigurationException, IOException {
+        URL url = new URL(queryTitle + title);
+        URLConnection conn = url.openConnection();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+
+        // The xml response had leading whitespace that had to be removed
+        StringBuilder xmlString = new StringBuilder();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line = bufferedReader.readLine().trim();
+        xmlString.append(line + "\n");
+        while ((line = bufferedReader.readLine()) != null) {
+            xmlString.append(line + "\n");
+            //System.out.println(line); // testing
+        }
+        String xmlResponse = xmlString.toString();
+        bufferedReader.close();
+        Document doc = db.parse(new InputSource(new StringReader(xmlResponse)));
+        doc.getDocumentElement().normalize();
+       // Log.i("SearchTitle", "parseXMLTitle executed");
+        return doc;
+
+    }
+
     /**
-     * Parses Document to created a textbook and results if query was successful
+     * Parses Document to created a textbook and results if queryISBN was successful
      *
      * @param doc Document to be parsed
      * @return Textbook
@@ -194,7 +222,7 @@ public class DirectTextbook {
     }
 
     /**
-     * Public static method to execute query and return textbook
+     * Public static method to execute queryISBN and return textbook
      *
      * @param isbn ISBN of book aka barcode
      * @return Textbook
@@ -204,5 +232,10 @@ public class DirectTextbook {
      */
     public static Textbook query(String isbn) throws SAXException, IOException, ParserConfigurationException {
         return DirectTextbook.parseXML(DirectTextbook.getXMLResponse(isbn));
+    }
+
+    public static Textbook queryTitle(String bookTitle) throws SAXException, IOException, ParserConfigurationException
+    {
+        return DirectTextbook.parseXML(DirectTextbook.getXMLResponseTitle(bookTitle));
     }
 }

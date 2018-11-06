@@ -1,6 +1,8 @@
 package com.example.jnbcb.qrtextbook;
 
+import android.app.SearchManager;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,19 +11,54 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.jnbcb.qrtextbook.query.DirectTextbook;
+import com.example.jnbcb.qrtextbook.query.Textbook;
+
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 public class TitleSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
+    private String bookTitle;
+    private Textbook textbookTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_search);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Button titleSearchBtn = findViewById(R.id.titleSearchBtn);
+        titleSearchBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                queryForBook();
+            }
+        });
+//        // Verify the action and get the query
+//        if (Intent.ACTION_SEARCH == intent.action)
+//        {
+//            intent.getStringExtra(SearchManager.QUERY)?.also {
+//            query ->
+//                    //doMySearch(query)
+//                    queryForBook(query);
+//             }
+//        }
+
 
         mDrawerLayout = findViewById(R.id.drawer_titleSearch);
 
@@ -104,7 +141,24 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
 
     }
 
-    public void QueryForBook(View view) {
-
+    public void queryForBook() {
+        Log.i("SearchTitle", "Search Btn clicked");
+        EditText enterTitle = (EditText)findViewById(R.id.enterTitle);
+        bookTitle = enterTitle.getText().toString();
+        Log.i("SearchTitle", bookTitle);
+        try {
+           textbookTitle = DirectTextbook.queryTitle(bookTitle);
+        } catch (SAXException e) {
+            Log.e("ResultLoader SAX", e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e("ResultLoader IO", e.getMessage());
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            Log.e("ResultLoader Parser", e.getMessage());
+            e.printStackTrace();
+        }
+        System.out.println(textbookTitle);
+        Log.i("SearchTitle", textbookTitle.toString());
     }
 }
