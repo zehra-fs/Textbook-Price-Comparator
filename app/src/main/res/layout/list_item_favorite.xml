@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
-    android:orientation="horizontal">
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:background="@color/colorSecondary"
+    >
 
     <TextView
         android:id="@+id/vendor_name_favorite"
@@ -39,29 +41,13 @@
 
     <Button
         android:id="@+id/delete"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/delete_icon"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ic_remove_circle_red_500_24dp"
         android:focusable="false"
         android:text=""
         />
-
-    <!--
-    <Button
-        android:id="@+id/delete"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/colorAccent"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:focusable="false"
-        android:text="del"
-        />
--->
 
 </LinearLayout>
