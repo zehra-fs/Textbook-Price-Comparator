@@ -1,6 +1,5 @@
 package com.example.jnbcb.qrtextbook;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.jnbcb.qrtextbook.query.DirectTextbook;
 import com.example.jnbcb.qrtextbook.query.Textbook;
@@ -24,6 +22,7 @@ import com.example.jnbcb.qrtextbook.query.Textbook;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -33,7 +32,7 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private String bookTitle;
-    private Textbook textbookTitle;
+    private List<Textbook> textbookTitles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,19 +148,19 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
         bookTitle = enterTitle.getText().toString();
         bookTitle = bookTitle.replaceAll("\\s", "+");
         Log.i("SearchTitle", bookTitle);
-//        try {
-//           textbookTitle = DirectTextbook.queryTitle(bookTitle);
-//        } catch (SAXException e) {
-//            Log.e("ResultLoader SAX", e.getMessage());
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            Log.e("ResultLoader IO", e.getMessage());
-//            e.printStackTrace();
-//        } catch (ParserConfigurationException e) {
-//            Log.e("ResultLoader Parser", e.getMessage());
-//            e.printStackTrace();
-//        }
-//        System.out.println(textbookTitle);
-       // Log.i("SearchTitle", textbookTitle.toString());
+        try {
+           textbookTitles = DirectTextbook.queryTitle(bookTitle);
+        } catch (SAXException e) {
+            Log.e("ResultLoader SAX", e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e("ResultLoader IO", e.getMessage());
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            Log.e("ResultLoader Parser", e.getMessage());
+            e.printStackTrace();
+        }
+        System.out.println(textbookTitles);
+       // Log.i("SearchTitle", textbookTitles.toString());
     }
 }
