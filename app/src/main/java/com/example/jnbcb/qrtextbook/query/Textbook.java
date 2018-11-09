@@ -31,6 +31,19 @@ public class Textbook implements Serializable{
         this.success = success;
     }
 
+    @Ignore
+    public Textbook(@NonNull String isbn, String title, String author, String publisher,
+                    String yearPublished, String edition,  boolean success) {
+        this.isbn = isbn;
+        //this.results = results;
+        this.title = title;
+        this.publisher = publisher;
+        this.edition = edition;
+        this.yearPublished = yearPublished;
+        this.author = author;
+        this.success = success;
+    }
+
     public List<Result> getResults() {
         return results;
     }

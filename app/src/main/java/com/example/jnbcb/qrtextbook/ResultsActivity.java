@@ -102,6 +102,13 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
+
+    private void launchTitleSearch(View view){
+        Intent intent = new Intent(view.getContext(), TitleSearchActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId())
@@ -114,6 +121,11 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
             case R.id.barcode:
                 launchBarcode(mDrawerLayout);
                 break;
+
+            case R.id.title_search:
+                launchTitleSearch(mDrawerLayout);
+                break;
+
             case R.id.history_button:
                 launchHistory(mDrawerLayout);
                 break;

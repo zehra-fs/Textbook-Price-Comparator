@@ -118,6 +118,11 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
         startActivity(intent);
     }
 
+    private void launchTitleSearch(View view){
+        Intent intent = new Intent(view.getContext(), TitleSearchActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
@@ -128,6 +133,11 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
             case R.id.barcode:
                 launchBarcode(mDrawerLayout);
                 break;
+
+            case R.id.title_search:
+                launchTitleSearch(mDrawerLayout);
+                break;
+
             case R.id.history_button:
                 launchHistory(mDrawerLayout);
                 break;

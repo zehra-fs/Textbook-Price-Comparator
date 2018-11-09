@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResultsActivity"
+    tools:context=".HistoryActivity"
     android:id="@+id/parent_history"
     android:background="@color/colorSecondary" >
+
 
 
 

@@ -1,90 +1,76 @@
 package com.example.jnbcb.qrtextbook;
 
-
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
-import com.example.jnbcb.qrtextbook.listview.HistoryAdapter;
-import com.example.jnbcb.qrtextbook.listview.HistoryLoader;
+import com.example.jnbcb.qrtextbook.query.DirectTextbook;
 import com.example.jnbcb.qrtextbook.query.Textbook;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import javax.xml.parsers.ParserConfigurationException;
 
-/**
- * This class is used to display the textbooks stored in the db
- */
-public class HistoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Textbook>>,
-        NavigationView.OnNavigationItemSelectedListener {
+public class TitleSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
-
-
-    @BindView(R.id.list_view_history)
-    ListView mListView;
-    @BindView(R.id.empty_state_history)
-    TextView mEmptyState;
-    @BindView(R.id.bar_history)
-    ProgressBar mProgressBar;
-    HistoryAdapter mAdapter;
+    private String bookTitle;
+    private List<Textbook> textbookTitles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
-        ButterKnife.bind(this);
-        List<Textbook> list = new ArrayList<>();
-        mAdapter = new HistoryAdapter(this, R.layout.list_item_textbook, list);
-        mListView.setAdapter(mAdapter);
-        mListView.setEmptyView(mEmptyState);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Textbook textbook = mAdapter.getItem(position);
-                ResultsActivity.currentTextbook = textbook;
-                Intent intent = ResultsActivity.historyIntent(view.getContext(), textbook.getIsbn());
-                startActivity(intent);
+        setContentView(R.layout.activity_title_search);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Button titleSearchBtn = findViewById(R.id.titleSearchBtn);
+        titleSearchBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                queryForBook();
             }
         });
-        getSupportLoaderManager().initLoader(0, null, this);
+//        // Verify the action and get the query
+//        if (Intent.ACTION_SEARCH == intent.action)
+//        {
+//            intent.getStringExtra(SearchManager.QUERY)?.also {
+//            query ->
+//                    //doMySearch(query)
+//                    queryForBook(query);
+//             }
+//        }
 
-        mDrawerLayout = findViewById(R.id.parent_history);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewHist);
+        mDrawerLayout = findViewById(R.id.drawer_titleSearch);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewTitleSearch);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbarHist);
+        mToolbar = (Toolbar) findViewById(R.id.toolbarTS);
         setSupportActionBar(mToolbar);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -121,7 +107,7 @@ public class HistoryActivity extends AppCompatActivity implements LoaderManager.
 
     }
 
-    private void launchTitleSearch(View view){
+    private void launchTitleSearch(View view) {
         Intent intent = new Intent(view.getContext(), TitleSearchActivity.class);
         startActivity(intent);
     }
@@ -154,36 +140,27 @@ public class HistoryActivity extends AppCompatActivity implements LoaderManager.
 
     }
 
-    /**
-     * Reloads the listview
-     */
-    public void dataChanged() {
-        getSupportLoaderManager().restartLoader(0, null, this);
-    }
 
-    @NonNull
-    @Override
-    public Loader<List<Textbook>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        mProgressBar.setVisibility(View.VISIBLE);
-        Log.e("loader", "start loader");
-        return new HistoryLoader(this);
-    }
 
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Textbook>> loader, List<Textbook> textbooks) {
-        mAdapter.clear();
-        mProgressBar.setVisibility(View.INVISIBLE);
-        if (textbooks.isEmpty()) {
-            mEmptyState.setText("Your history is empty!");
-        } else {
-            Collections.reverse(textbooks);
-            mAdapter.addAll(textbooks);
+    public void queryForBook() {
+        Log.i("SearchTitle", "Search Btn clicked");
+        EditText enterTitle = (EditText)findViewById(R.id.enterTitle);
+        bookTitle = enterTitle.getText().toString();
+        bookTitle = bookTitle.replaceAll("\\s", "+");
+        Log.i("SearchTitle", bookTitle);
+        try {
+           textbookTitles = DirectTextbook.queryTitle(bookTitle);
+        } catch (SAXException e) {
+            Log.e("ResultLoader SAX", e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e("ResultLoader IO", e.getMessage());
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            Log.e("ResultLoader Parser", e.getMessage());
+            e.printStackTrace();
         }
-        Log.e("loader", "finish loader");
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<Textbook>> loader) {
-        mAdapter.clear();
+        System.out.println(textbookTitles);
+       // Log.i("SearchTitle", textbookTitles.toString());
     }
 }
