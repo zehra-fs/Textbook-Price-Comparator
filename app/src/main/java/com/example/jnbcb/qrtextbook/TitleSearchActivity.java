@@ -108,7 +108,7 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
 
     }
 
-    private void launchTitleSearch(View view){
+    private void launchTitleSearch(View view) {
         Intent intent = new Intent(view.getContext(), TitleSearchActivity.class);
         startActivity(intent);
     }
@@ -141,24 +141,27 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
 
     }
 
+
+
     public void queryForBook() {
         Log.i("SearchTitle", "Search Btn clicked");
         EditText enterTitle = (EditText)findViewById(R.id.enterTitle);
         bookTitle = enterTitle.getText().toString();
+        bookTitle = bookTitle.replaceAll("\\s", "+");
         Log.i("SearchTitle", bookTitle);
-        try {
-           textbookTitle = DirectTextbook.queryTitle(bookTitle);
-        } catch (SAXException e) {
-            Log.e("ResultLoader SAX", e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.e("ResultLoader IO", e.getMessage());
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            Log.e("ResultLoader Parser", e.getMessage());
-            e.printStackTrace();
-        }
-        System.out.println(textbookTitle);
-        Log.i("SearchTitle", textbookTitle.toString());
+//        try {
+//           textbookTitle = DirectTextbook.queryTitle(bookTitle);
+//        } catch (SAXException e) {
+//            Log.e("ResultLoader SAX", e.getMessage());
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            Log.e("ResultLoader IO", e.getMessage());
+//            e.printStackTrace();
+//        } catch (ParserConfigurationException e) {
+//            Log.e("ResultLoader Parser", e.getMessage());
+//            e.printStackTrace();
+//        }
+//        System.out.println(textbookTitle);
+       // Log.i("SearchTitle", textbookTitle.toString());
     }
 }

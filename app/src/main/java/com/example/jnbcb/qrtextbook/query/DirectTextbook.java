@@ -83,7 +83,7 @@ public class DirectTextbook {
         bufferedReader.close();
         Document doc = db.parse(new InputSource(new StringReader(xmlResponse)));
         doc.getDocumentElement().normalize();
-       // Log.i("SearchTitle", "parseXMLTitle executed");
+        //doc.getElementsByTagName("title");
         return doc;
 
     }
@@ -99,6 +99,14 @@ public class DirectTextbook {
         if (textBook.isSuccess()) {
             textBook.setResults(DirectTextbook.getResults(doc, textBook.getIsbn()));
         }
+        return textBook;
+    }
+
+    private static List<Textbook> parseTitlesXML(Document doc) {
+        List<Textbook> textBook = DirectTextbook.getTitleResults(doc);
+//        if (textBook.isSuccess()) {
+//            textBook.setResults(DirectTextbook.getResults(doc, textBook.getIsbn()));
+//        }
         return textBook;
     }
 
@@ -221,6 +229,78 @@ public class DirectTextbook {
         return results;
     }
 
+    private static List<Textbook> getTitleResults(Document doc) {
+        NodeList items = doc.getElementsByTagName("book");
+        Element element;
+        NodeList attribute;
+        String title;
+        String author;
+        String publisher;
+        String publicationdate;
+        String ean;
+        String edition;
+        String format;
+
+        List<Textbook> bookResults = new ArrayList<>();
+        Textbook book;
+
+        for (int index = 0; index < items.getLength(); index++) {
+            element = (Element) items.item(index);
+
+            attribute = element.getElementsByTagName("title");
+            if (attribute.item(0) != null) {
+                title = attribute.item(0).getTextContent();
+            } else {
+                title = "";
+            }
+
+            attribute = element.getElementsByTagName("author");
+            if (attribute.item(0) != null) {
+                author = attribute.item(0).getTextContent();
+            } else {
+                author = "";
+            }
+
+            attribute = element.getElementsByTagName("publisher");
+            if (attribute.item(0) != null) {
+                publisher = attribute.item(0).getTextContent();
+            } else {
+                publisher = "";
+            }
+
+            attribute = element.getElementsByTagName("publicationdate");
+            if (attribute.item(0) != null) {
+                publicationdate = attribute.item(0).getTextContent();
+            } else {
+                publicationdate = "";
+            }
+
+            attribute = element.getElementsByTagName("ean");
+            if (attribute.item(0) != null) {
+                ean = attribute.item(0).getTextContent();
+            } else {
+                ean = "";
+            }
+            attribute = element.getElementsByTagName("edition");
+            if (attribute.item(0) != null) {
+                edition = attribute.item(0).getTextContent();
+            } else {
+                edition = "";
+            }
+//            attribute = element.getElementsByTagName("format");
+//            if (attribute.item(0) != null) {
+//                format = attribute.item(0).getTextContent();
+//            } else {
+//                format = "";
+//            }
+
+            book = new Textbook(ean, title, author, publisher, publicationdate, edition, true);
+           // result = new Result(url, vendor, price, type, condition, isbn);
+            bookResults.add(book);
+        }
+        return bookResults;
+    }
+
     /**
      * Public static method to execute queryISBN and return textbook
      *
@@ -234,8 +314,8 @@ public class DirectTextbook {
         return DirectTextbook.parseXML(DirectTextbook.getXMLResponse(isbn));
     }
 
-    public static Textbook queryTitle(String bookTitle) throws SAXException, IOException, ParserConfigurationException
+    public static List<Textbook> queryTitle(String bookTitle) throws SAXException, IOException, ParserConfigurationException
     {
-        return DirectTextbook.parseXML(DirectTextbook.getXMLResponseTitle(bookTitle));
+        return DirectTextbook.parseTitlesXML(DirectTextbook.getXMLResponseTitle(bookTitle));
     }
 }
