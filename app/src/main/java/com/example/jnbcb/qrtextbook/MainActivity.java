@@ -45,5 +45,9 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void launchTitleSearch(View view){
+        Intent intent = new Intent(this, TitleSearchActivity.class);
+        startActivity(intent);
+    }
 
 }
