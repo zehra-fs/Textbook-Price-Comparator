@@ -11,7 +11,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorBackgroundFloating"
+        android:background="@color/colorSecondary"
         android:cacheColorHint="@android:color/background_light"
         android:orientation="vertical"
         android:id="@+id/constrFavorite">
@@ -33,7 +33,7 @@
             android:id="@+id/list_view_favorite"
             android:layout_width="match_parent"
             android:layout_height="510dp"
-            android:dividerHeight="1dp"
+            android:dividerHeight="2dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
