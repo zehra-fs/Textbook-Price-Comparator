@@ -160,7 +160,7 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
             Log.e("ResultLoader Parser", e.getMessage());
             e.printStackTrace();
         }
-        System.out.println(textbookTitles);
-       // Log.i("SearchTitle", textbookTitles.toString());
+         System.out.println(textbookTitles);
+        //Log.i("SearchTitle", textbookTitles.toString());
     }
 }

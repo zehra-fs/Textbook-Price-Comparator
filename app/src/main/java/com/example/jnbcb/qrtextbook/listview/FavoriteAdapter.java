@@ -19,6 +19,7 @@ import com.example.jnbcb.qrtextbook.FavoriteActivity;
 import com.example.jnbcb.qrtextbook.R;
 import com.example.jnbcb.qrtextbook.database.ApplicationDB;
 import com.example.jnbcb.qrtextbook.query.Result;
+import com.example.jnbcb.qrtextbook.query.Textbook;
 
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class FavoriteAdapter extends ArrayAdapter<Result> {
         }
         final View newView = view;
         final Result result = getItem(position);
+
         if (result != null) {
             holder.vendorName.setText(result.getCompanyName());
             holder.price.setText(String.format("%.2f", result.getPrice()));
