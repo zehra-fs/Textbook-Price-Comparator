@@ -45,7 +45,9 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
         titleSearchBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                queryForBook();
+                //queryForBook();
+                Intent intent = new Intent(TitleSearchActivity.this, TitlesActivity.class);
+                startActivity(intent);
             }
         });
 //        // Verify the action and get the query
@@ -112,6 +114,12 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
         startActivity(intent);
     }
 
+    private void launchTitlesActivity(View view)
+    {
+        Intent intent = new Intent(view.getContext(), TitlesActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
@@ -140,16 +148,14 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
 
     }
 
-
-
-    public void queryForBook() {
+  /*  public void queryForBook() {
         Log.i("SearchTitle", "Search Btn clicked");
         EditText enterTitle = (EditText)findViewById(R.id.enterTitle);
         bookTitle = enterTitle.getText().toString();
         bookTitle = bookTitle.replaceAll("\\s", "+");
         Log.i("SearchTitle", bookTitle);
         try {
-           textbookTitles = DirectTextbook.queryTitle(bookTitle);
+            textbookTitles = DirectTextbook.queryTitle(bookTitle);
         } catch (SAXException e) {
             Log.e("ResultLoader SAX", e.getMessage());
             e.printStackTrace();
@@ -161,6 +167,8 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
             e.printStackTrace();
         }
         System.out.println(textbookTitles);
-       // Log.i("SearchTitle", textbookTitles.toString());
-    }
+        // Log.i("SearchTitle", textbookTitles.toString());
+    }*/
+
+
 }
