@@ -28,11 +28,12 @@ public class TitlesActivity extends AppCompatActivity {
     }
 
     public void queryForBook() {
-        Log.i("SearchTitle", "Search Btn clicked");
+        /*Log.i("SearchTitle", "Search Btn clicked");
         EditText enterTitle = (EditText)findViewById(R.id.enterTitle);
         bookTitle = enterTitle.getText().toString();
         bookTitle = bookTitle.replaceAll("\\s", "+");
-        Log.i("SearchTitle", bookTitle);
+        Log.i("SearchTitle", bookTitle);*/
+        bookTitle = getIntent().getExtras().getString("titleSearched");
         try {
             textbookTitles = DirectTextbook.queryTitle(bookTitle);
         } catch (SAXException e) {

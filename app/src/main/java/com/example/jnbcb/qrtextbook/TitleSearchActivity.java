@@ -46,7 +46,13 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 //queryForBook();
+                Log.i("SearchTitle", "Search Btn clicked");
+                EditText enterTitle = (EditText)findViewById(R.id.enterTitle);
+                bookTitle = enterTitle.getText().toString();
+                bookTitle = bookTitle.replaceAll("\\s", "+");
+                Log.i("SearchTitle", bookTitle);
                 Intent intent = new Intent(TitleSearchActivity.this, TitlesActivity.class);
+                intent.putExtra("titleSearched", bookTitle);
                 startActivity(intent);
             }
         });
@@ -111,6 +117,7 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
 
     private void launchTitleSearch(View view) {
         Intent intent = new Intent(view.getContext(), TitleSearchActivity.class);
+
         startActivity(intent);
     }
 
