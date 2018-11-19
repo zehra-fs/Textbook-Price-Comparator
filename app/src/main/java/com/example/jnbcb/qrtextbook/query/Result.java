@@ -22,6 +22,7 @@ public class Result {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int id;
+    private String title;
     private String url; // url of website to buy
     private String companyName; // EX. Amazon
     private float price; // price
@@ -31,13 +32,23 @@ public class Result {
     private String bookIsbn;
     private boolean favorited; // for use in DB when selecting favorited results
 
-    public Result(String url, String companyName, float price, String type, String condition, String bookIsbn) {
+
+    public Result(String title, String url, String companyName, float price, String type, String condition, String bookIsbn) {
         this.url = url;
+        this.title = title;
         this.companyName = companyName;
         this.price = price;
         this.type = type;
         this.condition = condition;
         this.bookIsbn = bookIsbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUrl() {

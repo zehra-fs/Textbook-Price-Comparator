@@ -169,15 +169,28 @@ public class DirectTextbook {
 
     private static List<Result> getResults(Document doc, String isbn) {
         NodeList items = doc.getElementsByTagName("item");
+        NodeList titles = doc.getElementsByTagName("book");
         Element element;
+        ArrayList<String> titlesAL = new ArrayList<>();
         NodeList attribute;
         String vendor;
         String url;
+
         float price;
         String condition;
         String type;
         List<Result> results = new ArrayList<>();
         Result result;
+
+        for (int index = 0; index < titles.getLength(); index++) {
+            element = (Element) titles.item(index);
+            attribute = element.getElementsByTagName("title");
+            if (attribute.item(0) != null) {
+                titlesAL.add(attribute.item(0).getTextContent());
+            } else {
+                titlesAL.add("");
+            }
+        }
         for (int index = 0; index < items.getLength(); index++) {
             element = (Element) items.item(index);
 
@@ -223,8 +236,9 @@ public class DirectTextbook {
             } else {
                 type = "";
             }
-            result = new Result(url, vendor, price, type, condition, isbn);
+            result = new Result(titlesAL.get(0), url, vendor, price, type, condition, isbn);
             results.add(result);
+
         }
         return results;
     }

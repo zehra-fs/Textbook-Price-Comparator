@@ -46,8 +46,8 @@ public class ResultListAdapter extends ArrayAdapter<Result> {
         }
         final Result result = getItem(position);
         if (result != null) {
-            holder.vendorName.setText(result.getCompanyName());
-            holder.price.setText(String.format("%.2f", result.getPrice()));
+            holder.vendorName.setText(String.format(result.getCompanyName()));
+            holder.price.setText(String.format("$%.2f", result.getPrice()));
             holder.condition.setText(result.getCondition());
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(view.getContext());
             // Checks if result is favorite and selects appropriate button background

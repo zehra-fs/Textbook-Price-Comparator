@@ -19,6 +19,9 @@ import com.example.jnbcb.qrtextbook.FavoriteActivity;
 import com.example.jnbcb.qrtextbook.R;
 import com.example.jnbcb.qrtextbook.database.ApplicationDB;
 import com.example.jnbcb.qrtextbook.query.Result;
+import com.example.jnbcb.qrtextbook.query.Textbook;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -50,9 +53,11 @@ public class FavoriteAdapter extends ArrayAdapter<Result> {
         }
         final View newView = view;
         final Result result = getItem(position);
+
         if (result != null) {
+            holder.textName.setText(result.getTitle());
             holder.vendorName.setText(result.getCompanyName());
-            holder.price.setText(String.format("%.2f", result.getPrice()));
+            holder.price.setText(String.format("$%.2f", result.getPrice()));
             holder.condition.setText(result.getCondition());
             final ApplicationDB db = ApplicationDB.getInMemoryDatabase(view.getContext());
             // Remove favorite from database and reload listview
@@ -79,12 +84,14 @@ public class FavoriteAdapter extends ArrayAdapter<Result> {
     }
 
     private class ViewHolder {
+        private TextView textName;
         private TextView vendorName;
         private TextView price;
         private TextView condition;
         private Button delBut;
 
         private ViewHolder(View view) {
+            textName = (TextView) view.findViewById(R.id.text_name);
             vendorName = (TextView) view.findViewById(R.id.vendor_name_favorite);
             condition = (TextView) view.findViewById(R.id.condition_favorite);
             price = (TextView) view.findViewById(R.id.price_favorite);

@@ -5,9 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+
     tools:context=".MainActivity">
 
     <!-- This is the button to launch barcode scanner/camera -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.087" />
     <Button
         android:id="@+id/barcode"
         android:layout_width="wrap_content"
@@ -15,15 +30,15 @@
         android:background="@android:color/transparent"
         android:drawable="@color/colorPrimary"
         android:drawableTop="@drawable/barcode2"
-        android:textColor="@android:color/white"
         android:onClick="launchBarcode"
         android:text="@string/barcode"
+        android:textColor="@android:color/white"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29" />
+        app:layout_constraintVertical_bias="0.254" />
 
     <!-- This is the button to launch the history activity -->
 
@@ -34,15 +49,15 @@
         android:background="@android:color/transparent"
         android:drawable="@color/colorPrimary"
         android:drawableTop="@drawable/ic_history_blue_600_36dp"
-        android:textColor="@android:color/white"
         android:onClick="launchHistory"
         android:text="@string/history"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintHorizontal_bias="0.192"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.619" />
+        app:layout_constraintVertical_bias="0.734" />
 
     <!-- This is the button to launch the favorite results-->
 
@@ -53,16 +68,16 @@
         android:layout_marginLeft="20dp"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/ic_grade_blue_600_36dp"
-        android:textColor="@android:color/white"
         android:onClick="launchFavorite"
         android:text="@string/favorites"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintHorizontal_bias="0.783"
         app:layout_constraintLeft_toRightOf="@id/history_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.619" />
+        app:layout_constraintVertical_bias="0.734" />
 
     <Button
         android:id="@+id/title_search"
