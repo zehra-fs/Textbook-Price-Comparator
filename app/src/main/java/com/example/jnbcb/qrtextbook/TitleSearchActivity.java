@@ -47,8 +47,12 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
                 // Code here executes on main thread after user presses button
                 //queryForBook();
                 Log.i("SearchTitle", "Search Btn clicked");
+                //search by title
                 EditText enterTitle = (EditText)findViewById(R.id.enterTitle);
+                //search by author
+                EditText enterAuthor = (EditText) findViewById(R.id.enterAuthor);
                 bookTitle = enterTitle.getText().toString();
+                bookTitle = bookTitle + " " + enterAuthor.getText().toString();
                 bookTitle = bookTitle.replaceAll("\\s", "+");
                 Log.i("SearchTitle", bookTitle);
                 Intent intent = new Intent(TitleSearchActivity.this, TitlesActivity.class);
@@ -177,7 +181,5 @@ public class TitleSearchActivity extends AppCompatActivity implements Navigation
         System.out.println(textbookTitles);
         // Log.i("SearchTitle", textbookTitles.toString());
     }*/
-
-
 
 }
