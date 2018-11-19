@@ -295,4 +295,11 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
         return intent;
     }
 
+    public static Intent titlesIntent(Context context, String isbn){
+        Intent intent = new Intent(context, ResultsActivity.class);
+        intent.putExtra("history", false);
+        intent.putExtra("barcode", isbn);
+        return intent;
+    }
+
 }
