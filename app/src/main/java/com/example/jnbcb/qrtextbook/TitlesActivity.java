@@ -1,8 +1,11 @@
 package com.example.jnbcb.qrtextbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -38,9 +41,20 @@ public class TitlesActivity extends AppCompatActivity {
         textbookTitles = new ArrayList<>();
         //List<String> titlesList = new ArrayList<>();
         titleAdapter = new ArrayAdapter<>
-                (this, R.layout.list_item_textbook,R.id.text_name, textbookTitles);
+                (this, R.layout.list_item_textbook, R.id.text_name, textbookTitles );
         mListViewTitles.setAdapter(titleAdapter);
         queryForBook();
+
+        mListViewTitles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Textbook textbook = titleAdapter.getItem(position);
+                ResultsActivity.currentTextbook = textbook;
+                Intent intent = ResultsActivity.historyIntent(view.getContext(), textbook.getIsbn());
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void queryForBook() {
