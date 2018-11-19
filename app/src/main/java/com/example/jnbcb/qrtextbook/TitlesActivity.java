@@ -50,9 +50,11 @@ public class TitlesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Textbook textbook = titleAdapter.getItem(position);
                 ResultsActivity.currentTextbook = textbook;
-                Intent intent = ResultsActivity.historyIntent(view.getContext(), textbook.getIsbn());
+                String TBisbn = textbook.getIsbn();
+                Intent intent = ResultsActivity.titlesIntent(view.getContext(), textbook.getIsbn());
                 startActivity(intent);
             }
+
         });
 
     }
@@ -79,5 +81,7 @@ public class TitlesActivity extends AppCompatActivity {
         System.out.println(textbookTitles);
         titleAdapter.notifyDataSetChanged();
         // Log.i("SearchTitle", textbookTitles.toString());
+
+
     }
 }
