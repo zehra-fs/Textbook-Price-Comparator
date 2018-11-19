@@ -34,18 +34,19 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="40dp"
+            android:layout_width="53dp"
             android:layout_height="31dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="29dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Enter title of book:"
+            android:layout_marginBottom="4dp"
+            android:text="Title:"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.17" />
+            app:layout_constraintVertical_bias="0.209" />
 
         <EditText
             android:id="@+id/enterTitle"
@@ -64,18 +65,19 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="54dp"
-            android:layout_height="22dp"
+            android:layout_width="79dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Enter Name of author:"
+            android:text="Author:"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/enterAuthor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/enterTitle"
-            app:layout_constraintVertical_bias="0.663" />
+            app:layout_constraintVertical_bias="0.769" />
 
         <EditText
             android:id="@+id/enterAuthor"
@@ -83,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="220dp"
+            android:layout_marginBottom="208dp"
             android:ems="10"
             android:hint="Search an author"
             android:inputType="textPersonName"
@@ -94,17 +96,22 @@
 
         <Button
             android:id="@+id/titleSearchBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="182dp"
+            android:layout_height="47dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@color/colorAccent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:text="@string/title_search_btn"
+            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enterAuthor" />
+            app:layout_constraintTop_toBottomOf="@+id/enterAuthor"
+            app:layout_constraintVertical_bias="0.377" />
 
     </android.support.constraint.ConstraintLayout>
 
