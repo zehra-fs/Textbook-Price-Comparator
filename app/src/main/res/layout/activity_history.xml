@@ -9,11 +9,12 @@
     android:background="@color/colorSecondary" >
 
 
-
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorSecondary"
+        android:cacheColorHint="@android:color/background_light"
+        android:orientation="vertical"
         android:id="@+id/constrHist">
 
         <android.support.v7.widget.Toolbar

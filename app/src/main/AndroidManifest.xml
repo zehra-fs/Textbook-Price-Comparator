@@ -38,17 +38,18 @@
         <activity android:name=".FavoriteActivity"
             android:label= ""></activity>
 
-      
 
-        <activity android:name=".TitleSearchActivity" >
 
+        <activity android:name=".TitleSearchActivity"
+            android:label= "">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"
+                />
         </activity>
 
         <activity android:name=".TitlesActivity"></activity>

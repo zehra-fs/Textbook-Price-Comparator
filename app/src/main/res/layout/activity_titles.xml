@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".TitlesActivity"
     android:id="@+id/drawerTitlesActivity"
+    android:background="@color/colorSecondary"
     >
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorBackgroundFloating"
     android:cacheColorHint="@android:color/background_light"
     android:orientation="vertical"
     android:dividerHeight='1dp'

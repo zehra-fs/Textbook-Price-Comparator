@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
 
+
     tools:context=".MainActivity">
 
     <!-- This is the button to launch barcode scanner/camera -->
@@ -16,6 +17,7 @@
         android:text=""
         android:textColor="@android:color/white"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -83,11 +85,10 @@
         android:id="@+id/title_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/ic_search_blue_600_36dp"
         android:onClick="launchTitleSearch"
@@ -98,7 +99,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barcode"
-        app:layout_constraintVertical_bias="0.616" />
+        app:layout_constraintVertical_bias="0.107" />
 
 
 </android.support.constraint.ConstraintLayout>

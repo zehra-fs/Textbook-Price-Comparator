@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ResultsActivity"
     android:id="@+id/drawer"
-    android:background="@color/colorSecondary"
-    >
+        >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="@color/colorPrimary"
         android:background="@color/colorSecondary"
+        android:cacheColorHint="@android:color/background_light"
         android:orientation="vertical"
-        android:dividerHeight='1dp'
-        android:divider="@color/design_default_color_primary_dark"
         android:id="@+id/parent"
         >
 
